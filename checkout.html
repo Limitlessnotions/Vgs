@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Header -->
+  <!-- NAVBAR -->
+<!-- NAVBAR -->
+<header class="bg-black text-white">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <div class="text-xl font-bold">
+      TRANSPORT<span class="text-red-500">DEMO</span>
+    </div>
+
+    <nav class="space-x-6 text-sm hidden md:block">
+      <a href="index.html" class="hover:text-red-500">Home</a>
+      <a href="trips.html" class="hover:text-red-500">Book a Trip</a>
+      <a href="login.html" class="hover:text-red-500">Login</a>
+      <a
+        href="signup.html"
+        class="border border-red-500 px-3 py-1 rounded hover:bg-red-600 hover:text-white"
+      >
+        Sign Up
+      </a>
+    </nav>
+  </div>
+</header>
+
+
+  <!-- Main -->
+  <main class="max-w-xl mx-auto mt-6 bg-white p-6 rounded shadow">
+
+    <h2 class="text-lg font-semibold mb-4">Passenger Details</h2>
+
+    <form action="success.html" method="GET" class="space-y-4">
+
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Full Name</label>
+        <input
+          type="text"
+          placeholder="John Doe"
+          class="w-full border rounded px-3 py-2"
+          required
+        />
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Phone Number</label>
+        <input
+          type="tel"
+          placeholder="08012345678"
+          class="w-full border rounded px-3 py-2"
+          required
+        />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Email Address</label>
+        <input
+          type="email"
+          placeholder="email@example.com"
+          class="w-full border rounded px-3 py-2"
+          required
+        />
+      </div>
+
+      <!-- Summary -->
+      <div class="bg-gray-50 p-4 rounded text-sm">
+        <p><strong>Route:</strong> Abuja → Lagos</p>
+        <p><strong>Seat:</strong> Selected Seat</p>
+        <p><strong>Amount:</strong> ₦25,000</p>
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+      >
+        Confirm Booking
+      </button>
+
+    </form>
+
+  </main>
+
+</body>
+</html>
+
