@@ -1,37 +1,219 @@
 "use client";
+export const dynamic =
+  "force-dynamic";
 
 import { useState } from "react";
 
-import { useRouter } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-export default function RoundTripPage() {
+export default function SelectReturnSeatsPage() {
 
   const router = useRouter();
 
+  const searchParams =
+    useSearchParams();
+
   /* =====================================
-     FORM STATE
+     QUERY PARAMS
   ===================================== */
 
-  const [from, setFrom] =
-    useState("F.C.T (Abuja)");
+  const from =
+    searchParams.get("from") || "";
 
-  const [to, setTo] =
-    useState("Plateau (Jos)");
+  const to =
+    searchParams.get("to") || "";
 
-  const [vehicle, setVehicle] =
-    useState("Prestige - 5 Seater");
+  const seats =
+    searchParams.get("seats") || "1";
 
-  const [seats, setSeats] =
-    useState("1");
+  const departureDate =
+    searchParams.get(
+      "departureDate"
+    ) || "";
 
-  const [departureDate, setDepartureDate] =
-    useState("");
+  const returnDate =
+    searchParams.get(
+      "returnDate"
+    ) || "";
 
-  const [returnDate, setReturnDate] =
-    useState("");
+  /* =====================================
+     DEPARTURE DETAILS
+  ===================================== */
+
+  const departureVehicle =
+    searchParams.get(
+      "departureVehicle"
+    ) || "";
+
+  const departureTime =
+    searchParams.get(
+      "departureTime"
+    ) || "";
+
+  const departureAmount =
+    searchParams.get(
+      "departureAmount"
+    ) || "₦13,500";
+
+  const selectedDepartureSeats =
+    searchParams.get(
+      "selectedDepartureSeats"
+    ) || "";
+
+  /* =====================================
+     RETURN DETAILS
+  ===================================== */
+
+  const returnVehicle =
+    searchParams.get(
+      "returnVehicle"
+    ) || "";
+
+  const returnTime =
+    searchParams.get(
+      "returnTime"
+    ) || "";
+
+  const returnAmount =
+    searchParams.get(
+      "returnAmount"
+    ) || "₦13,500";
+
+  /* =====================================
+     CONFIG
+  ===================================== */
+
+  const requestedSeats =
+    Number(seats);
+
+  const getSeatCount = () => {
+
+    const match =
+      returnVehicle.match(
+        /\d+/
+      );
+
+    if (!match) return 12;
+
+    return Number(match[0]);
+  };
+
+  const totalSeats =
+    getSeatCount();
+
+  const occupiedSeats =
+    totalSeats === 5
+      ? [1]
+      : totalSeats === 12
+      ? [4, 8, 11]
+      : [3, 6];
+
+  const allSeats =
+    Array.from(
+      {
+        length: totalSeats,
+      },
+      (_, i) => i + 1
+    );
+
+  /* =====================================
+     SELECTED RETURN SEATS
+  ===================================== */
+
+  const [
+    selectedReturnSeats,
+    setSelectedReturnSeats,
+  ] = useState<number[]>(
+    []
+  );
+
+  /* =====================================
+     HANDLE CLICK
+  ===================================== */
+
+  const handleSeatClick = (
+    seat: number
+  ) => {
+
+    if (
+      occupiedSeats.includes(
+        seat
+      )
+    ) {
+      return;
+    }
+
+    const alreadySelected =
+      selectedReturnSeats.includes(
+        seat
+      );
+
+    if (alreadySelected) {
+
+      setSelectedReturnSeats(
+        selectedReturnSeats.filter(
+          (s) => s !== seat
+        )
+      );
+
+      return;
+    }
+
+    if (
+      selectedReturnSeats.length >=
+      requestedSeats
+    ) {
+
+      alert(
+        `You can only select ${requestedSeats} seat(s)`
+      );
+
+      return;
+    }
+
+    setSelectedReturnSeats([
+      ...selectedReturnSeats,
+      seat,
+    ]);
+  };
+
+  /* =====================================
+     TOTALS
+  ===================================== */
+
+  const departureNumeric =
+    Number(
+      departureAmount.replace(
+        /[₦,]/g,
+        ""
+      )
+    );
+
+  const returnNumeric =
+    Number(
+      returnAmount.replace(
+        /[₦,]/g,
+        ""
+      )
+    );
+
+  const departureTotal =
+    departureNumeric *
+    requestedSeats;
+
+  const returnTotal =
+    returnNumeric *
+    requestedSeats;
+
+  const grandTotal =
+    departureTotal +
+    returnTotal;
 
   /* =====================================
      CONTINUE
@@ -39,19 +221,49 @@ export default function RoundTripPage() {
 
   const handleContinue = () => {
 
+    if (
+      selectedReturnSeats.length !==
+      requestedSeats
+    ) {
+
+      alert(
+        `Please select ${requestedSeats} return seat(s)`
+      );
+
+      return;
+    }
+
     router.push(
-      `/bookings/round-trip/select-departure?from=${encodeURIComponent(
+      `/bookings/round-trip/passenger-details?from=${encodeURIComponent(
         from
       )}&to=${encodeURIComponent(
         to
-      )}&vehicle=${encodeURIComponent(
-        vehicle
       )}&seats=${encodeURIComponent(
         seats
       )}&departureDate=${encodeURIComponent(
         departureDate
       )}&returnDate=${encodeURIComponent(
         returnDate
+      )}&departureVehicle=${encodeURIComponent(
+        departureVehicle
+      )}&departureTime=${encodeURIComponent(
+        departureTime
+      )}&departureAmount=${encodeURIComponent(
+        departureAmount
+      )}&selectedDepartureSeats=${encodeURIComponent(
+        selectedDepartureSeats
+      )}&returnVehicle=${encodeURIComponent(
+        returnVehicle
+      )}&returnTime=${encodeURIComponent(
+        returnTime
+      )}&returnAmount=${encodeURIComponent(
+        returnAmount
+      )}&selectedReturnSeats=${encodeURIComponent(
+        selectedReturnSeats.join(
+          ", "
+        )
+      )}&grandTotal=${encodeURIComponent(
+        grandTotal
       )}`
     );
   };
@@ -61,242 +273,282 @@ export default function RoundTripPage() {
 
       <Navbar />
 
-      {/* =====================================
-          HERO
-      ===================================== */}
-
-      <section className="relative flex min-h-[350px] items-center justify-center overflow-hidden">
-
-        {/* BACKGROUND */}
-
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=2072&auto=format&fit=crop')",
-          }}
-        />
-
-        {/* OVERLAY */}
-
-        <div className="absolute inset-0 bg-black/70" />
-
-        {/* CONTENT */}
-
-        <div className="relative z-10 px-5 text-center text-white">
-
-          <p className="text-[12px] uppercase tracking-[6px] text-[#00A878]">
-            Round Trip Booking
-          </p>
-
-          <h1 className="mt-6 text-[42px] lg:text-[72px] font-light uppercase leading-[1.1]">
-
-            Book Your
-            <br />
-            Round Trip
-          </h1>
-
-          <p className="mx-auto mt-8 max-w-[700px] text-[15px] leading-[32px] text-[#d8d8d8]">
-
-            Plan your departure and return
-            journey together with comfort,
-            convenience and flexible travel
-            scheduling.
-          </p>
-        </div>
-      </section>
-
-      {/* =====================================
-          FORM SECTION
-      ===================================== */}
-
       <section className="px-5 py-24 lg:px-10">
 
-        <div className="mx-auto max-w-[900px] bg-white p-8 shadow-sm lg:p-16">
+        <div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-14 lg:grid-cols-[1fr_360px]">
 
-          {/* HEADING */}
+          {/* =====================================
+              LEFT
+          ===================================== */}
 
-          <div>
+          <div className="bg-white p-8 shadow-sm lg:p-14">
 
-            <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
-              Travel Information
-            </p>
-
-            <h2 className="mt-5 text-[34px] lg:text-[52px] font-light uppercase leading-[1.1] text-[#222]">
-
-              Round Trip
-              Reservation
-            </h2>
-          </div>
-
-          {/* FORM */}
-
-          <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2">
-
-            {/* FROM */}
+            {/* HEADER */}
 
             <div>
 
-              <label className="mb-4 block text-[13px] uppercase tracking-[4px] text-[#555]">
-                Travelling From
-              </label>
+              <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
+                Return Seat Selection
+              </p>
 
-              <select
-                value={from}
-                onChange={(e) =>
-                  setFrom(
-                    e.target.value
-                  )
-                }
-                className="h-[62px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none focus:border-[#00A878]"
-              >
-                <option>
-                  F.C.T (Abuja)
-                </option>
+              <h1 className="mt-5 text-[36px] lg:text-[56px] font-light uppercase leading-[1.1] text-[#222]">
 
-                <option>
-                  Plateau (Jos)
-                </option>
+                Select
+                <br />
+                Return Seats
+              </h1>
 
-                <option>
-                  Kaduna
-                </option>
-              </select>
+              <p className="mt-6 text-[16px] leading-[30px] text-[#666]">
+                Choose your preferred
+                seats for your return
+                journey.
+              </p>
             </div>
 
-            {/* TO */}
+            {/* LEGEND */}
 
-            <div>
+            <div className="mt-14 flex flex-wrap gap-6">
 
-              <label className="mb-4 block text-[13px] uppercase tracking-[4px] text-[#555]">
-                Travelling To
-              </label>
+              <div className="flex items-center gap-3">
 
-              <select
-                value={to}
-                onChange={(e) =>
-                  setTo(
-                    e.target.value
-                  )
-                }
-                className="h-[62px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none focus:border-[#00A878]"
-              >
-                <option>
-                  Plateau (Jos)
-                </option>
+                <div className="h-[18px] w-[18px] bg-[#ff6b81]" />
 
-                <option>
-                  Kaduna
-                </option>
+                <p className="text-[14px] text-[#555]">
+                  Booked
+                </p>
+              </div>
 
-                <option>
-                  F.C.T (Abuja)
-                </option>
-              </select>
+              <div className="flex items-center gap-3">
+
+                <div className="h-[18px] w-[18px] border border-[#ccc] bg-white" />
+
+                <p className="text-[14px] text-[#555]">
+                  Available
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+
+                <div className="h-[18px] w-[18px] bg-[#00A878]" />
+
+                <p className="text-[14px] text-[#555]">
+                  Selected
+                </p>
+              </div>
             </div>
 
             {/* VEHICLE */}
 
-            <div>
+            <div className="mt-16 overflow-x-auto">
 
-              <label className="mb-4 block text-[13px] uppercase tracking-[4px] text-[#555]">
-                Type Of Vehicle
-              </label>
+              <div className="w-fit rounded-[24px] border-2 border-[#222] bg-[#f9f9f9] px-12 py-12">
 
-              <select
-                value={vehicle}
-                onChange={(e) =>
-                  setVehicle(
-                    e.target.value
-                  )
-                }
-                className="h-[62px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none focus:border-[#00A878]"
-              >
-                <option>
-                  Prestige - 5 Seater
-                </option>
+                {/* DRIVER */}
 
-                <option>
-                  Regular - 12 Seater
-                </option>
+                <div className="mb-10">
 
-                <option>
-                  Executive Bus
-                </option>
-              </select>
+                  <div className="flex h-[70px] w-[70px] items-center justify-center rounded-full border-[3px] border-[#555] text-[34px]">
+
+                    🛞
+                  </div>
+                </div>
+
+                {/* SEATS */}
+
+                <div className="grid grid-cols-2 gap-x-12 gap-y-7">
+
+                  {allSeats.map(
+                    (seat) => {
+
+                      const isOccupied =
+                        occupiedSeats.includes(
+                          seat
+                        );
+
+                      const isSelected =
+                        selectedReturnSeats.includes(
+                          seat
+                        );
+
+                      return (
+                        <button
+                          key={seat}
+                          onClick={() =>
+                            handleSeatClick(
+                              seat
+                            )
+                          }
+                          disabled={
+                            isOccupied
+                          }
+                          className={`flex h-[70px] w-[84px] items-center justify-center border text-[20px] font-light transition-all duration-200 ${
+                            isOccupied
+                              ? "cursor-not-allowed border-[#ff6b81] bg-[#ff6b81] text-white"
+                              : isSelected
+                              ? "border-[#00A878] bg-[#00A878] text-white"
+                              : "border-[#d8d8d8] bg-white text-[#222] hover:border-[#00A878] hover:bg-[#00A878] hover:text-white"
+                          }`}
+                        >
+                          {seat}
+                        </button>
+                      );
+                    }
+                  )}
+                </div>
+              </div>
             </div>
 
-            {/* SEATS */}
+            {/* BUTTON */}
 
-            <div>
-
-              <label className="mb-4 block text-[13px] uppercase tracking-[4px] text-[#555]">
-                Number Of Seats
-              </label>
-
-              <input
-                type="number"
-                min={1}
-                max={10}
-                value={seats}
-                onChange={(e) =>
-                  setSeats(
-                    e.target.value
-                  )
-                }
-                className="h-[62px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none focus:border-[#00A878]"
-              />
-            </div>
-
-            {/* DEPARTURE DATE */}
-
-            <div>
-
-              <label className="mb-4 block text-[13px] uppercase tracking-[4px] text-[#555]">
-                Departure Date
-              </label>
-
-              <input
-                type="date"
-                value={departureDate}
-                onChange={(e) =>
-                  setDepartureDate(
-                    e.target.value
-                  )
-                }
-                className="h-[62px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none focus:border-[#00A878]"
-              />
-            </div>
-
-            {/* RETURN DATE */}
-
-            <div>
-
-              <label className="mb-4 block text-[13px] uppercase tracking-[4px] text-[#555]">
-                Return Date
-              </label>
-
-              <input
-                type="date"
-                value={returnDate}
-                onChange={(e) =>
-                  setReturnDate(
-                    e.target.value
-                  )
-                }
-                className="h-[62px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none focus:border-[#00A878]"
-              />
-            </div>
+            <button
+              onClick={
+                handleContinue
+              }
+              className="mt-16 h-[60px] bg-[#00A878] px-12 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
+            >
+              Continue To Passenger Details
+            </button>
           </div>
 
-          {/* BUTTON */}
+          {/* =====================================
+              SUMMARY
+          ===================================== */}
 
-          <button
-            onClick={handleContinue}
-            className="mt-16 h-[62px] bg-[#00A878] px-12 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
-          >
-            Continue Booking
-          </button>
+          <div className="sticky top-[120px] h-fit bg-white px-8 py-10 shadow-sm">
+
+            <h2 className="text-[30px] font-light text-[#222]">
+              Trip Summary
+            </h2>
+
+            <div className="mt-10 space-y-10">
+
+              {/* DEPARTURE */}
+
+              <div>
+
+                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+                  Departure Trip
+                </p>
+
+                <div className="mt-4 space-y-2">
+
+                  <p className="text-[18px] text-[#222]">
+                    {from} → {to}
+                  </p>
+
+                  <p className="text-[15px] text-[#666]">
+                    {departureTime}
+                  </p>
+
+                  <p className="text-[15px] text-[#666]">
+                    {
+                      departureVehicle
+                    }
+                  </p>
+
+                  <p className="text-[15px] text-[#00A878]">
+                    Seats:{" "}
+                    {
+                      selectedDepartureSeats
+                    }
+                  </p>
+                </div>
+              </div>
+
+              {/* RETURN */}
+
+              <div>
+
+                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+                  Return Trip
+                </p>
+
+                <div className="mt-4 space-y-2">
+
+                  <p className="text-[18px] text-[#222]">
+                    {to} → {from}
+                  </p>
+
+                  <p className="text-[15px] text-[#666]">
+                    {returnTime}
+                  </p>
+
+                  <p className="text-[15px] text-[#666]">
+                    {
+                      returnVehicle
+                    }
+                  </p>
+
+                  <p className="text-[15px] text-[#00A878]">
+                    Seats:{" "}
+                    {selectedReturnSeats.join(
+                      ", "
+                    )}
+                  </p>
+                </div>
+              </div>
+
+              {/* PASSENGERS */}
+
+              <div>
+
+                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+                  Passengers
+                </p>
+
+                <p className="mt-4 text-[18px] text-[#222]">
+                  {
+                    requestedSeats
+                  }{" "}
+                  Passenger(s)
+                </p>
+              </div>
+
+              {/* TOTALS */}
+
+              <div className="border-t border-[#e5e5e5] pt-8 space-y-6">
+
+                <div>
+
+                  <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+                    Departure Total
+                  </p>
+
+                  <p className="mt-2 text-[26px] font-light text-[#222]">
+
+                    ₦
+                    {departureTotal.toLocaleString()}
+                  </p>
+                </div>
+
+                <div>
+
+                  <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+                    Return Total
+                  </p>
+
+                  <p className="mt-2 text-[26px] font-light text-[#222]">
+
+                    ₦
+                    {returnTotal.toLocaleString()}
+                  </p>
+                </div>
+
+                <div className="border-t border-[#e5e5e5] pt-6">
+
+                  <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+                    Grand Total
+                  </p>
+
+                  <p className="mt-3 text-[42px] font-light text-[#00A878]">
+
+                    ₦
+                    {grandTotal.toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
