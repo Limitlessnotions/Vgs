@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
+
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
+import {
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 export default function Hero() {
 
@@ -86,10 +91,6 @@ export default function Hero() {
 
   const handleSearch = () => {
 
-    /* =========================
-       CHARTER
-    ========================== */
-
     if (activeTab === "charter") {
 
       alert(
@@ -98,10 +99,6 @@ export default function Hero() {
 
       return;
     }
-
-    /* =========================
-       VALIDATION
-    ========================== */
 
     if (
       !travellingFrom ||
@@ -117,10 +114,6 @@ export default function Hero() {
 
       return;
     }
-
-    /* =========================
-       ROUND TRIP
-    ========================== */
 
     if (activeTab === "round") {
 
@@ -152,10 +145,6 @@ export default function Hero() {
       return;
     }
 
-    /* =========================
-       ONE WAY
-    ========================== */
-
     router.push(
       `/bookings/select-vehicles?from=${encodeURIComponent(
         travellingFrom
@@ -172,73 +161,14 @@ export default function Hero() {
   };
 
   /* =========================
-     REUSABLE FORM INPUT
+     INPUT STYLES
   ========================== */
 
-  const FormInput = ({
-    label,
-    placeholder,
-    type = "text",
-    min,
-    max,
-  }: {
-    label: string;
-    placeholder?: string;
-    type?: string;
-    min?: number;
-    max?: number;
-  }) => (
-
-    <div>
-
-      <label className="mb-3 block text-[14px] text-[#333]">
-
-        {label}
-      </label>
-
-      <input
-        type={type}
-        placeholder={placeholder}
-        min={min}
-        max={max}
-        className="h-[52px] w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none"
-      />
-    </div>
-  );
+  const inputStyles =
+    "h-[52px] w-full lg:w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none";
 
   /* =========================
-     REUSABLE FORM SELECT
-  ========================== */
-
-  const FormSelect = ({
-    label,
-    options,
-  }: {
-    label: string;
-    options: string[];
-  }) => (
-
-    <div>
-
-      <label className="mb-3 block text-[14px] text-[#333]">
-
-        {label}
-      </label>
-
-      <select className="h-[52px] w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none">
-
-        {options.map((option) => (
-
-          <option key={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-
-  /* =========================
-     BOOK A TRIP
+     BOOK TRIP FORM
   ========================== */
 
   const renderBookTrip = () => (
@@ -259,7 +189,7 @@ export default function Hero() {
               e.target.value
             )
           }
-          className="h-[52px] w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none"
+          className={inputStyles}
         >
 
           <option value="">
@@ -295,7 +225,7 @@ export default function Hero() {
               e.target.value
             )
           }
-          className="h-[52px] w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none"
+          className={inputStyles}
         >
 
           <option value="">
@@ -335,11 +265,11 @@ export default function Hero() {
             !travellingFrom ||
             !travellingTo
           }
-          className={`h-[52px] w-[340px] border px-4 text-[14px] outline-none ${
+          className={`${inputStyles} ${
             !travellingFrom ||
             !travellingTo
-              ? "cursor-not-allowed border-[#e5e5e5] bg-[#f5f5f5] text-[#aaa]"
-              : "border-[#d8d8d8] bg-white text-black"
+              ? "cursor-not-allowed bg-[#f5f5f5] text-[#aaa]"
+              : ""
           }`}
         >
 
@@ -393,7 +323,7 @@ export default function Hero() {
             )
           }
           placeholder="1"
-          className="h-[52px] w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none"
+          className={inputStyles}
         />
       </div>
 
@@ -413,7 +343,7 @@ export default function Hero() {
               e.target.value
             )
           }
-          className="h-[52px] w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none"
+          className={inputStyles}
         />
       </div>
     </>
@@ -427,8 +357,6 @@ export default function Hero() {
 
     <>
       {renderBookTrip()}
-
-      {/* RETURN DATE */}
 
       <div>
 
@@ -444,80 +372,25 @@ export default function Hero() {
               e.target.value
             )
           }
-          className="h-[52px] w-[340px] border border-[#d8d8d8] bg-white px-4 text-[14px] text-black outline-none"
+          className={inputStyles}
         />
       </div>
     </>
   );
 
-  /* =========================
-     CHARTER
-  ========================== */
-
-  const renderCharter = () => (
-
-    <>
-      <FormInput
-        label="Passenger Name :"
-        placeholder="Full Name"
-      />
-
-      <FormInput
-        label="Phone Number :"
-        placeholder="08012345678"
-      />
-
-      <FormInput
-        label="Email :"
-        placeholder="name@gmail.com"
-        type="email"
-      />
-
-      <FormInput
-        label="Travelling From :"
-        placeholder="Take Off point e.g Jos"
-      />
-
-      <FormInput
-        label="Destination :"
-        placeholder="Arrival point e.g Abuja"
-      />
-
-      <FormSelect
-        label="Type of Vehicle :"
-        options={[
-          "Select Type",
-          "Luxury Bus",
-          "Mini Bus",
-          "Executive Ride",
-        ]}
-      />
-
-      <FormInput
-        label="Departure Date :"
-        type="date"
-      />
-
-      <FormInput
-        label="Departure Time :"
-        type="time"
-      />
-    </>
-  );
-
   return (
 
-    <section className="min-h-screen bg-[#efefef] px-20 py-24">
+    <section className="min-h-screen bg-[#efefef] px-5 py-14 lg:px-20 lg:py-24">
 
-      <div className="mx-auto flex max-w-[1700px] justify-between gap-28">
+      <div className="mx-auto flex max-w-[1700px] flex-col gap-14 lg:flex-row lg:justify-between lg:gap-20">
 
         {/* LEFT */}
 
-        <div className="w-[430px] pt-8">
+        <div className="w-full pt-4 lg:w-[430px] lg:pt-8">
 
           {/* HEADING */}
 
-          <h1 className="text-[34px] font-light uppercase tracking-[1px] leading-[58px] text-[#222]">
+          <h1 className="text-[28px] font-light uppercase leading-[42px] tracking-[1px] text-[#222] lg:text-[34px] lg:leading-[58px]">
 
             BOOK YOUR
             <br />
@@ -530,13 +403,13 @@ export default function Hero() {
 
           {/* TABS */}
 
-          <div className="mt-16 flex">
+          <div className="mt-10 flex flex-wrap gap-2 lg:mt-16">
 
             <button
               onClick={() =>
                 setActiveTab("book")
               }
-              className={`border px-5 py-4 text-[11px] uppercase tracking-wide transition ${
+              className={`border px-4 py-3 text-[10px] uppercase tracking-wide transition lg:px-5 lg:py-4 lg:text-[11px] ${
                 activeTab === "book"
                   ? "border-[#d8d8d8] bg-white text-black"
                   : "border-transparent bg-transparent text-black"
@@ -549,7 +422,7 @@ export default function Hero() {
               onClick={() =>
                 setActiveTab("round")
               }
-              className={`border px-5 py-4 text-[11px] uppercase tracking-wide transition ${
+              className={`border px-4 py-3 text-[10px] uppercase tracking-wide transition lg:px-5 lg:py-4 lg:text-[11px] ${
                 activeTab === "round"
                   ? "border-[#d8d8d8] bg-white text-black"
                   : "border-transparent bg-transparent text-black"
@@ -564,7 +437,7 @@ export default function Hero() {
                   "charter"
                 )
               }
-              className={`border px-5 py-4 text-[11px] uppercase tracking-wide transition ${
+              className={`border px-4 py-3 text-[10px] uppercase tracking-wide transition lg:px-5 lg:py-4 lg:text-[11px] ${
                 activeTab ===
                 "charter"
                   ? "border-[#d8d8d8] bg-white text-black"
@@ -577,7 +450,7 @@ export default function Hero() {
 
           {/* FORM */}
 
-          <div className="mt-20 space-y-8">
+          <div className="mt-12 space-y-6 lg:mt-20 lg:space-y-8">
 
             {activeTab ===
               "book" &&
@@ -586,12 +459,6 @@ export default function Hero() {
             {activeTab ===
               "round" &&
               renderRoundTrip()}
-
-            {activeTab ===
-              "charter" &&
-              renderCharter()}
-
-            {/* BUTTON */}
 
             <button
               type="button"
@@ -610,11 +477,9 @@ export default function Hero() {
 
         {/* RIGHT */}
 
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex w-full items-center justify-center">
 
-          {/* IMAGE */}
-
-          <div className="relative h-[620px] w-[620px] overflow-hidden bg-white">
+          <div className="relative h-[260px] w-full overflow-hidden bg-white sm:h-[350px] lg:h-[620px] lg:max-w-[620px]">
 
             <img
               src={
