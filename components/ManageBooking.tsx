@@ -1,70 +1,109 @@
 export default function ManageBooking() {
+
   return (
-    <section className="min-h-screen bg-[#efefef] px-20 py-32">
+    <section className="min-h-screen bg-[#efefef]">
 
-      <div className="mx-auto flex max-w-[1400px] items-center justify-center gap-40">
+      <div className="page-container section-spacing">
 
-        {/* LEFT SIDE */}
-        <div>
+        <div className="responsive-flex gap-16 lg:gap-24">
 
-          {/* Heading */}
-          <h1 className="text-[58px] font-light uppercase tracking-[1px] leading-[72px] text-[#222]">
-            MANAGE YOUR BOOKING
-          </h1>
+          {/* =========================
+              LEFT SIDE
+          ========================== */}
 
-          <p className="mt-3 text-[18px] text-[#555]">
-            Verify Rescheduling | Cancellations
-          </p>
+          <div className="w-full flex-1">
 
-          {/* Card */}
-          <div className="mt-14 w-[560px] bg-[#f3f3f3] p-8 shadow-sm">
+            {/* HEADING */}
 
-            {/* Top Input Section */}
-            <div className="border border-[#d8d8d8] bg-[#f7f7f7] p-6">
+            <p className="text-[12px] uppercase tracking-[6px] text-[#777]">
 
-              <label className="block text-[14px] text-[#444]">
-                Enter Reference No
-              </label>
+              Booking Management
+            </p>
 
-              {/* Input Row */}
-              <div className="mt-5 flex items-center gap-4">
+            <h1 className="page-title mt-5 leading-[1.1] text-[#222]">
 
-                <input
-                  type="text"
-                  placeholder="e.g VTSCID14857079869"
-                  className="h-[52px] w-full border border-[#d8d8d8] bg-white px-4 text-[14px] outline-none"
-                />
+              Manage
+              <br />
+              Your Booking
+            </h1>
 
-                <button className="h-[52px] min-w-[160px] bg-[#00A878] px-6 text-[13px] uppercase tracking-[2px] text-white transition hover:bg-[#008F67]">
-                  SEARCH
-                  <br />
-                  BOOKING
-                </button>
+            <p className="mt-6 max-w-[600px] text-[15px] leading-[30px] text-[#666]">
+
+              Verify your booking,
+              reschedule trips or manage
+              cancellations using your
+              booking reference number.
+            </p>
+
+            {/* =========================
+                CARD
+            ========================== */}
+
+            <div className="mt-12 bg-white p-6 shadow-sm lg:mt-14 lg:p-10">
+
+              {/* INPUT SECTION */}
+
+              <div className="border border-[#d8d8d8] bg-[#f8f8f8] p-5 lg:p-8">
+
+                <label className="block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                  Enter Reference Number
+                </label>
+
+                {/* INPUT ROW */}
+
+                <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-center">
+
+                  <input
+                    type="text"
+                    placeholder="e.g VTSCID14857079869"
+                    className="form-input bg-white placeholder:text-[#999] focus:border-[#00A878]"
+                  />
+
+                  <button className="primary-button w-full whitespace-nowrap lg:w-auto">
+
+                    Search Booking
+                  </button>
+                </div>
+              </div>
+
+              {/* RESULTS */}
+
+              <div className="mt-8 border-t border-[#e5e5e5] pt-8">
+
+                <p className="text-[18px] font-light text-[#333]">
+
+                  Results for:
+                </p>
+
+                <div className="mt-6 rounded-[12px] border border-dashed border-[#d8d8d8] bg-[#fafafa] px-5 py-8 text-center">
+
+                  <p className="text-[15px] leading-[28px] text-[#777]">
+
+                    Enter a booking reference
+                    number above to retrieve
+                    your booking details.
+                  </p>
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Divider */}
-            <div className="mt-8 border-t border-[#d8d8d8] pt-8">
+          {/* =========================
+              RIGHT SIDE
+          ========================== */}
 
-              <p className="text-[18px] text-[#333]">
-                Results for:
-              </p>
+          <div className="flex w-full justify-center lg:w-auto">
+
+            <div className="relative flex h-[280px] w-[280px] items-center justify-center rounded-full bg-[#00A878] sm:h-[360px] sm:w-[360px] lg:h-[500px] lg:w-[500px]">
+
+              <img
+                src="/images/manage-booking.png"
+                alt="Manage Booking"
+                className="absolute bottom-[-10px] h-[340px] w-auto object-contain sm:h-[430px] lg:bottom-[40px] lg:h-[620px]"
+              />
             </div>
           </div>
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className="flex items-center justify-center">
-
-          {/* Green Circle */}
-         <div className="relative h-[500px] w-[500px] rounded-full bg-[#00A878]">
-
-  <img
-    src="/images/manage-booking.png"
-    alt="Manage Booking"
-    className="absolute bottom-[40px] left-1/2 z-10 h-[620px] w-auto -translate-x-1/2 object-contain"
-  />
-</div>
         </div>
       </div>
     </section>

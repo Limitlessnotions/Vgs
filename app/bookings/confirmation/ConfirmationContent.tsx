@@ -17,9 +17,9 @@ export default function ConfirmationPage() {
   const searchParams =
     useSearchParams();
 
-  /* =====================================
+  /* =========================
      QUERY PARAMS
-  ===================================== */
+  ========================== */
 
   const from =
     searchParams.get("from") || "";
@@ -41,9 +41,9 @@ export default function ConfirmationPage() {
       "selectedSeats"
     ) || "";
 
-  /* =====================================
+  /* =========================
      PASSENGER COUNT
-  ===================================== */
+  ========================== */
 
   const seatArray =
     selectedSeats
@@ -51,9 +51,9 @@ export default function ConfirmationPage() {
       .map((seat) => seat.trim())
       .filter(Boolean);
 
-  /* =====================================
+  /* =========================
      BOOKING REFERENCE
-  ===================================== */
+  ========================== */
 
   const bookingReference =
     `VGS-${Math.floor(
@@ -65,207 +65,198 @@ export default function ConfirmationPage() {
 
       <Navbar />
 
-      <section className="px-5 py-20">
+      <section className="section-spacing">
 
-        <div className="mx-auto max-w-[900px] bg-white p-8 lg:p-16 shadow-sm">
+        <div className="page-container">
 
-          {/* =====================================
-              SUCCESS ICON
-          ===================================== */}
+          <div className="mx-auto max-w-[950px] bg-white p-6 shadow-sm lg:p-16">
 
-          <div className="flex justify-center">
+            {/* SUCCESS ICON */}
 
-            <div className="flex h-[95px] w-[95px] items-center justify-center rounded-full bg-[#00A878] text-[44px] text-white">
+            <div className="flex justify-center">
 
-              ✓
-            </div>
-          </div>
+              <div className="flex h-[90px] w-[90px] items-center justify-center rounded-full bg-[#00A878] text-[42px] text-white lg:h-[100px] lg:w-[100px] lg:text-[48px]">
 
-          {/* =====================================
-              HEADER
-          ===================================== */}
-
-          <div className="mt-10 text-center">
-
-            <p className="text-[12px] uppercase tracking-[6px] text-[#777]">
-              Booking Successful
-            </p>
-
-            <h1 className="mt-6 text-[38px] lg:text-[62px] font-light uppercase leading-[1.1] text-[#222]">
-
-              Booking
-              <br />
-              Confirmed
-            </h1>
-
-            <p className="mx-auto mt-8 max-w-[620px] text-[15px] leading-[32px] text-[#666]">
-              Your trip reservation has been
-              successfully completed. Please
-              keep your booking reference safe.
-            </p>
-          </div>
-
-          {/* =====================================
-              BOOKING REFERENCE
-          ===================================== */}
-
-          <div className="mt-16 border-2 border-dashed border-[#00A878] bg-[#f8fffc] px-8 py-12 text-center">
-
-            <p className="text-[12px] uppercase tracking-[6px] text-[#777]">
-              Booking Reference
-            </p>
-
-            <h2 className="mt-6 text-[42px] lg:text-[56px] font-light uppercase tracking-[3px] text-[#00A878]">
-
-              {bookingReference}
-            </h2>
-          </div>
-
-          {/* =====================================
-              BOOKING DETAILS
-          ===================================== */}
-
-          <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2">
-
-            {/* LEFT */}
-
-            <div className="space-y-8">
-
-              {/* ROUTE */}
-
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Route
-                </p>
-
-                <p className="mt-3 text-[20px] text-[#222]">
-                  {from} → {to}
-                </p>
-              </div>
-
-              {/* VEHICLE */}
-
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Vehicle
-                </p>
-
-                <p className="mt-3 text-[20px] text-[#222]">
-                  {vehicle}
-                </p>
-              </div>
-
-              {/* SEATS */}
-
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Seats Reserved
-                </p>
-
-                <p className="mt-3 text-[20px] text-[#222]">
-                  {selectedSeats}
-                </p>
+                ✓
               </div>
             </div>
 
-            {/* RIGHT */}
+            {/* HEADER */}
 
-            <div className="space-y-8">
+            <div className="mt-10 text-center">
 
-              {/* TIME */}
+              <p className="text-[11px] uppercase tracking-[6px] text-[#777] lg:text-[12px]">
 
-              <div>
+                Booking Successful
+              </p>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Departure Time
-                </p>
+              <h1 className="page-title mt-6 leading-[1.1]">
 
-                <p className="mt-3 text-[20px] text-[#222]">
-                  {time}
-                </p>
+                Booking
+                <br />
+                Confirmed
+              </h1>
+
+              <p className="mx-auto mt-8 max-w-[620px] text-[15px] leading-[30px] text-[#666]">
+
+                Your trip reservation has been
+                successfully completed. Please
+                keep your booking reference safe.
+              </p>
+            </div>
+
+            {/* BOOKING REFERENCE */}
+
+            <div className="mt-14 border-2 border-dashed border-[#00A878] bg-[#f8fffc] px-5 py-10 text-center lg:px-8 lg:py-12">
+
+              <p className="text-[11px] uppercase tracking-[6px] text-[#777] lg:text-[12px]">
+
+                Booking Reference
+              </p>
+
+              <h2 className="mt-5 break-words text-[34px] font-light uppercase tracking-[3px] text-[#00A878] lg:text-[56px]">
+
+                {bookingReference}
+              </h2>
+            </div>
+
+            {/* DETAILS */}
+
+            <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2">
+
+              {/* LEFT */}
+
+              <div className="space-y-8">
+
+                <div>
+
+                  <p className="text-[11px] uppercase tracking-[4px] text-[#888] lg:text-[12px]">
+
+                    Route
+                  </p>
+
+                  <p className="mt-3 text-[18px] text-[#222] lg:text-[20px]">
+
+                    {from} → {to}
+                  </p>
+                </div>
+
+                <div>
+
+                  <p className="text-[11px] uppercase tracking-[4px] text-[#888] lg:text-[12px]">
+
+                    Vehicle
+                  </p>
+
+                  <p className="mt-3 text-[18px] text-[#222] lg:text-[20px]">
+
+                    {vehicle}
+                  </p>
+                </div>
+
+                <div>
+
+                  <p className="text-[11px] uppercase tracking-[4px] text-[#888] lg:text-[12px]">
+
+                    Seats Reserved
+                  </p>
+
+                  <p className="mt-3 text-[18px] text-[#222] lg:text-[20px]">
+
+                    {selectedSeats}
+                  </p>
+                </div>
               </div>
 
-              {/* PASSENGERS */}
+              {/* RIGHT */}
 
-              <div>
+              <div className="space-y-8">
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Passenger Count
-                </p>
+                <div>
 
-                <p className="mt-3 text-[20px] text-[#222]">
-                  {
-                    seatArray.length
-                  }{" "}
-                  Passenger(s)
-                </p>
-              </div>
+                  <p className="text-[11px] uppercase tracking-[4px] text-[#888] lg:text-[12px]">
 
-              {/* AMOUNT */}
+                    Departure Time
+                  </p>
 
-              <div>
+                  <p className="mt-3 text-[18px] text-[#222] lg:text-[20px]">
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Amount Paid
-                </p>
+                    {time}
+                  </p>
+                </div>
 
-                <p className="mt-3 text-[32px] font-light text-[#00A878]">
+                <div>
 
-                  ₦
-                  {Number(
-                    total
-                  ).toLocaleString()}
-                </p>
+                  <p className="text-[11px] uppercase tracking-[4px] text-[#888] lg:text-[12px]">
+
+                    Passenger Count
+                  </p>
+
+                  <p className="mt-3 text-[18px] text-[#222] lg:text-[20px]">
+
+                    {seatArray.length} Passenger(s)
+                  </p>
+                </div>
+
+                <div>
+
+                  <p className="text-[11px] uppercase tracking-[4px] text-[#888] lg:text-[12px]">
+
+                    Amount Paid
+                  </p>
+
+                  <p className="mt-3 break-words text-[28px] font-light text-[#00A878] lg:text-[38px]">
+
+                    ₦
+                    {Number(
+                      total
+                    ).toLocaleString()}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* =====================================
-              NOTICE
-          ===================================== */}
+            {/* NOTICE */}
 
-          <div className="mt-16 border-l-[5px] border-[#00A878] bg-[#f8f8f8] px-6 py-6">
+            <div className="mt-14 border-l-[5px] border-[#00A878] bg-[#f8f8f8] px-5 py-5 lg:px-6 lg:py-6">
 
-            <p className="text-[15px] leading-[30px] text-[#555]">
-              Please arrive at the terminal
-              at least 30 minutes before
-              departure with a valid means
-              of identification.
-            </p>
-          </div>
+              <p className="text-[14px] leading-[28px] text-[#555] lg:text-[15px] lg:leading-[30px]">
 
-          {/* =====================================
-              ACTION BUTTONS
-          ===================================== */}
+                Please arrive at the terminal
+                at least 30 minutes before
+                departure with a valid means
+                of identification.
+              </p>
+            </div>
 
-          <div className="mt-16 flex flex-wrap justify-center gap-5">
+            {/* ACTIONS */}
 
-            {/* PRINT */}
+            <div className="mt-14 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
 
-            <button className="h-[58px] border border-[#222] bg-white px-10 text-[12px] uppercase tracking-[4px] text-[#222] transition hover:bg-[#222] hover:text-white">
+              {/* PRINT */}
 
-              Print Ticket
-            </button>
+              <button className="h-[56px] border border-[#222] bg-white px-8 text-[11px] uppercase tracking-[4px] text-[#222] transition hover:bg-[#222] hover:text-white">
 
-            {/* DOWNLOAD */}
-
-            <button className="h-[58px] border border-[#00A878] bg-white px-10 text-[12px] uppercase tracking-[4px] text-[#00A878] transition hover:bg-[#00A878] hover:text-white">
-
-              Download Ticket
-            </button>
-
-            {/* HOME */}
-
-            <Link href="/">
-
-              <button className="h-[58px] bg-[#00A878] px-10 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]">
-
-                Return Home
+                Print Ticket
               </button>
-            </Link>
+
+              {/* DOWNLOAD */}
+
+              <button className="h-[56px] border border-[#00A878] bg-white px-8 text-[11px] uppercase tracking-[4px] text-[#00A878] transition hover:bg-[#00A878] hover:text-white">
+
+                Download Ticket
+              </button>
+
+              {/* HOME */}
+
+              <Link href="/">
+
+                <button className="primary-button w-full sm:w-auto">
+
+                  Return Home
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

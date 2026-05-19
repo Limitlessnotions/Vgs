@@ -1,4 +1,5 @@
 "use client";
+
 export const dynamic =
   "force-dynamic";
 
@@ -19,9 +20,9 @@ export default function PassengerDetailsPage() {
   const searchParams =
     useSearchParams();
 
-  /* =====================================
+  /* =========================
      QUERY PARAMS
-  ===================================== */
+  ========================== */
 
   const from =
     searchParams.get("from") || "";
@@ -43,9 +44,9 @@ export default function PassengerDetailsPage() {
       "selectedSeats"
     ) || "";
 
-  /* =====================================
+  /* =========================
      SEAT ARRAY
-  ===================================== */
+  ========================== */
 
   const seatArray =
     selectedSeats
@@ -53,9 +54,9 @@ export default function PassengerDetailsPage() {
       .map((seat) => seat.trim())
       .filter(Boolean);
 
-  /* =====================================
+  /* =========================
      TOTAL
-  ===================================== */
+  ========================== */
 
   const numericAmount =
     Number(
@@ -66,9 +67,9 @@ export default function PassengerDetailsPage() {
     numericAmount *
     seatArray.length;
 
-  /* =====================================
+  /* =========================
      PASSENGERS STATE
-  ===================================== */
+  ========================== */
 
   const [passengers, setPassengers] =
     useState(
@@ -80,9 +81,9 @@ export default function PassengerDetailsPage() {
       }))
     );
 
-  /* =====================================
-     HANDLE INPUT CHANGE
-  ===================================== */
+  /* =========================
+     HANDLE CHANGE
+  ========================== */
 
   const handleChange = (
     index: number,
@@ -104,9 +105,9 @@ export default function PassengerDetailsPage() {
     );
   };
 
-  /* =====================================
-     PROCEED TO PAYMENT
-  ===================================== */
+  /* =========================
+     PROCEED
+  ========================== */
 
   const handleProceed = () => {
 
@@ -134,250 +135,279 @@ export default function PassengerDetailsPage() {
 
       <Navbar />
 
-      <section className="px-5 lg:px-10 py-24">
+      <section className="section-spacing">
 
-        <div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-14 lg:grid-cols-[1fr_360px]">
+        <div className="page-container">
 
-          {/* =====================================
-              LEFT SIDE
-          ===================================== */}
+          <div className="responsive-grid">
 
-          <div className="bg-white p-8 lg:p-14 shadow-sm">
+            {/* =========================
+                LEFT
+            ========================== */}
 
-            <h1 className="text-[34px] lg:text-[56px] font-light uppercase leading-[1.1] text-[#222]">
-              Passenger Details
-            </h1>
+            <div className="bg-white p-6 shadow-sm lg:p-14">
 
-            <p className="mt-5 max-w-[700px] text-[15px] leading-[30px] text-[#666]">
-              Kindly provide accurate passenger
-              information for your booking and
-              emergency contact purposes.
-            </p>
+              {/* HEADER */}
 
-            {/* PASSENGER FORMS */}
+              <h1 className="page-title leading-[1.1] text-[#222]">
 
-            <div className="mt-16 space-y-16">
+                Passenger Details
+              </h1>
 
-              {passengers.map(
-                (
-                  passenger,
-                  index
-                ) => (
-                  <div
-                    key={index}
-                    className="border-b border-[#e5e5e5] pb-14"
-                  >
+              <p className="mt-5 max-w-[700px] text-[15px] leading-[30px] text-[#666]">
 
-                    {/* TITLE */}
+                Kindly provide accurate passenger
+                information for your booking and
+                emergency contact purposes.
+              </p>
 
-                    <div className="mb-10">
+              {/* FORMS */}
 
-                      <h2 className="text-[26px] font-light uppercase text-[#222]">
+              <div className="mt-12 space-y-14 lg:mt-16 lg:space-y-16">
 
-                        Passenger{" "}
-                        {index + 1}
-                      </h2>
+                {passengers.map(
+                  (
+                    passenger,
+                    index
+                  ) => (
 
-                      <p className="mt-2 text-[15px] text-[#00A878]">
-                        Seat{" "}
-                        {
-                          passenger.seat
-                        }
-                      </p>
+                    <div
+                      key={index}
+                      className="border-b border-[#e5e5e5] pb-12 lg:pb-14"
+                    >
+
+                      {/* TITLE */}
+
+                      <div className="mb-8 lg:mb-10">
+
+                        <h2 className="text-[24px] font-light uppercase text-[#222] lg:text-[26px]">
+
+                          Passenger{" "}
+                          {index + 1}
+                        </h2>
+
+                        <p className="mt-2 text-[15px] text-[#00A878]">
+
+                          Seat{" "}
+                          {
+                            passenger.seat
+                          }
+                        </p>
+                      </div>
+
+                      {/* FORM GRID */}
+
+                      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+
+                        {/* FULL NAME */}
+
+                        <div>
+
+                          <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                            Full Name
+                          </label>
+
+                          <input
+                            type="text"
+                            placeholder="Enter full name"
+                            value={
+                              passenger.fullName
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              handleChange(
+                                index,
+                                "fullName",
+                                e.target.value
+                              )
+                            }
+                            className="form-input bg-[#f8f8f8] focus:border-[#00A878]"
+                          />
+                        </div>
+
+                        {/* EMAIL */}
+
+                        <div>
+
+                          <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                            Email Address
+                          </label>
+
+                          <input
+                            type="email"
+                            placeholder="Enter email address"
+                            value={
+                              passenger.email
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              handleChange(
+                                index,
+                                "email",
+                                e.target.value
+                              )
+                            }
+                            className="form-input bg-[#f8f8f8] focus:border-[#00A878]"
+                          />
+                        </div>
+
+                        {/* PHONE */}
+
+                        <div>
+
+                          <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                            Phone Number
+                          </label>
+
+                          <input
+                            type="tel"
+                            placeholder="Enter phone number"
+                            value={
+                              passenger.phone
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              handleChange(
+                                index,
+                                "phone",
+                                e.target.value
+                              )
+                            }
+                            className="form-input bg-[#f8f8f8] focus:border-[#00A878]"
+                          />
+                        </div>
+                      </div>
                     </div>
+                  )
+                )}
+              </div>
 
-                    {/* FORM GRID */}
+              {/* BUTTON */}
 
-                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <button
+                onClick={handleProceed}
+                className="primary-button mt-14"
+              >
 
-                      {/* FULL NAME */}
-
-                      <div>
-
-                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                          Full Name
-                        </label>
-
-                        <input
-                          type="text"
-                          placeholder="Enter full name"
-                          value={
-                            passenger.fullName
-                          }
-                          onChange={(
-                            e
-                          ) =>
-                            handleChange(
-                              index,
-                              "fullName",
-                              e.target.value
-                            )
-                          }
-                          className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                        />
-                      </div>
-
-                      {/* EMAIL */}
-
-                      <div>
-
-                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                          Email Address
-                        </label>
-
-                        <input
-                          type="email"
-                          placeholder="Enter email address"
-                          value={
-                            passenger.email
-                          }
-                          onChange={(
-                            e
-                          ) =>
-                            handleChange(
-                              index,
-                              "email",
-                              e.target.value
-                            )
-                          }
-                          className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                        />
-                      </div>
-
-                      {/* PHONE */}
-
-                      <div>
-
-                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                          Phone Number
-                        </label>
-
-                        <input
-                          type="tel"
-                          placeholder="Enter phone number"
-                          value={
-                            passenger.phone
-                          }
-                          onChange={(
-                            e
-                          ) =>
-                            handleChange(
-                              index,
-                              "phone",
-                              e.target.value
-                            )
-                          }
-                          className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-[15px] text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
+                Proceed To Payment
+              </button>
             </div>
 
-            {/* BUTTON */}
+            {/* =========================
+                SUMMARY
+            ========================== */}
 
-            <button
-              onClick={handleProceed}
-              className="mt-16 h-[60px] bg-[#00A878] px-12 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
-            >
-              Proceed To Payment
-            </button>
-          </div>
+            <div className="summary-card">
 
-          {/* =====================================
-              BOOKING SUMMARY
-          ===================================== */}
+              <div className="bg-white p-8 shadow-sm lg:p-10">
 
-          <div className="sticky top-[120px] h-fit bg-white px-8 py-10 shadow-sm">
+                <h2 className="text-[30px] font-light text-[#222]">
 
-            <h2 className="text-[30px] font-light text-[#222]">
-              Booking Summary
-            </h2>
+                  Booking Summary
+                </h2>
 
-            <div className="mt-10 space-y-8">
+                <div className="mt-10 space-y-8">
 
-              {/* ROUTE */}
+                  {/* ROUTE */}
 
-              <div>
+                  <div>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Route
-                </p>
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {from} → {to}
-                </p>
-              </div>
+                      Route
+                    </p>
 
-              {/* VEHICLE */}
+                    <p className="mt-3 text-[18px] text-[#222]">
 
-              <div>
+                      {from} → {to}
+                    </p>
+                  </div>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Vehicle
-                </p>
+                  {/* VEHICLE */}
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {vehicle}
-                </p>
-              </div>
+                  <div>
 
-              {/* TIME */}
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-              <div>
+                      Vehicle
+                    </p>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Departure Time
-                </p>
+                    <p className="mt-3 text-[18px] text-[#222]">
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {time}
-                </p>
-              </div>
+                      {vehicle}
+                    </p>
+                  </div>
 
-              {/* SEATS */}
+                  {/* TIME */}
 
-              <div>
+                  <div>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Selected Seats
-                </p>
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {selectedSeats}
-                </p>
-              </div>
+                      Departure Time
+                    </p>
 
-              {/* PASSENGERS */}
+                    <p className="mt-3 text-[18px] text-[#222]">
 
-              <div>
+                      {time}
+                    </p>
+                  </div>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Passengers
-                </p>
+                  {/* SEATS */}
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {
-                    seatArray.length
-                  }{" "}
-                  Passenger(s)
-                </p>
-              </div>
+                  <div>
 
-              {/* TOTAL */}
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-              <div>
+                      Selected Seats
+                    </p>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Total Amount
-                </p>
+                    <p className="mt-3 text-[18px] text-[#222]">
 
-                <p className="mt-3 text-[42px] font-light text-[#00A878]">
-                  ₦
-                  {total.toLocaleString()}
-                </p>
+                      {selectedSeats}
+                    </p>
+                  </div>
+
+                  {/* PASSENGERS */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Passengers
+                    </p>
+
+                    <p className="mt-3 text-[18px] text-[#222]">
+
+                      {
+                        seatArray.length
+                      }{" "}
+                      Passenger(s)
+                    </p>
+                  </div>
+
+                  {/* TOTAL */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Total Amount
+                    </p>
+
+                    <p className="mt-3 break-words text-[32px] font-light text-[#00A878] lg:text-[42px]">
+
+                      ₦
+                      {total.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

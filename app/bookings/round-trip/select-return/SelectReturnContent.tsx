@@ -1,5 +1,10 @@
 "use client";
 
+export const dynamic =
+  "force-dynamic";
+
+import { useState } from "react";
+
 import {
   useRouter,
   useSearchParams,
@@ -8,25 +13,22 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-export default function SelectReturnPage() {
+export default function SelectDepartureSeatsPage() {
 
   const router = useRouter();
 
   const searchParams =
     useSearchParams();
 
-  /* =====================================
+  /* =========================
      QUERY PARAMS
-  ===================================== */
+  ========================== */
 
   const from =
     searchParams.get("from") || "";
 
   const to =
     searchParams.get("to") || "";
-
-  const vehicle =
-    searchParams.get("vehicle") || "";
 
   const seats =
     searchParams.get("seats") || "1";
@@ -41,94 +43,203 @@ export default function SelectReturnPage() {
       "returnDate"
     ) || "";
 
-  /* =====================================
+  /* =========================
      DEPARTURE DETAILS
-  ===================================== */
-
-  const departureTime =
-    searchParams.get(
-      "departureTime"
-    ) || "";
+  ========================== */
 
   const departureVehicle =
     searchParams.get(
       "departureVehicle"
     ) || "";
 
+  const departureTime =
+    searchParams.get(
+      "departureTime"
+    ) || "";
+
   const departureAmount =
     searchParams.get(
       "departureAmount"
+    ) || "₦13,500";
+
+  /* =========================
+     RETURN DETAILS
+  ========================== */
+
+  const returnVehicle =
+    searchParams.get(
+      "returnVehicle"
     ) || "";
 
-  /* =====================================
-     RETURN TRIPS
-  ===================================== */
+  const returnTime =
+    searchParams.get(
+      "returnTime"
+    ) || "";
 
-  const returnTrips = [
-    {
-      id: 1,
-      time: "08:00 AM",
-      vehicle:
-        "Prestige - 5 Seater",
-      amount: "₦13,500",
-      availability:
-        "3 seats left",
-    },
+  const returnAmount =
+    searchParams.get(
+      "returnAmount"
+    ) || "₦13,500";
 
-    {
-      id: 2,
-      time: "02:00 PM",
-      vehicle:
-        "Regular - 12 Seater",
-      amount: "₦9,500",
-      availability:
-        "6 seats left",
-    },
+  /* =========================
+     SEAT CONFIG
+  ========================== */
 
-    {
-      id: 3,
-      time: "06:30 PM",
-      vehicle:
-        "Executive Bus",
-      amount: "₦18,000",
-      availability:
-        "4 seats left",
-    },
-  ];
+  const requestedSeats =
+    Number(seats);
 
-  /* =====================================
-     SELECT RETURN
-  ===================================== */
+  const getSeatCount = () => {
 
-  const handleSelectReturn = (
-    trip: any
+    const match =
+      departureVehicle.match(
+        /\d+/
+      );
+
+    if (!match) return 12;
+
+    return Number(match[0]);
+  };
+
+  const totalSeats =
+    getSeatCount();
+
+  const occupiedSeats =
+    totalSeats === 5
+      ? [2]
+      : totalSeats === 12
+      ? [3, 7, 10]
+      : [5, 8];
+
+  const allSeats =
+    Array.from(
+      {
+        length: totalSeats,
+      },
+      (_, i) => i + 1
+    );
+
+  /* =========================
+     SELECTED SEATS
+  ========================== */
+
+  const [
+    selectedSeats,
+    setSelectedSeats,
+  ] = useState<number[]>(
+    []
+  );
+
+  /* =========================
+     HANDLE CLICK
+  ========================== */
+
+  const handleSeatClick = (
+    seat: number
   ) => {
 
+    if (
+      occupiedSeats.includes(
+        seat
+      )
+    ) {
+      return;
+    }
+
+    const alreadySelected =
+      selectedSeats.includes(
+        seat
+      );
+
+    if (alreadySelected) {
+
+      setSelectedSeats(
+        selectedSeats.filter(
+          (s) => s !== seat
+        )
+      );
+
+      return;
+    }
+
+    if (
+      selectedSeats.length >=
+      requestedSeats
+    ) {
+
+      alert(
+        `You can only select ${requestedSeats} seat(s)`
+      );
+
+      return;
+    }
+
+    setSelectedSeats([
+      ...selectedSeats,
+      seat,
+    ]);
+  };
+
+  /* =========================
+     TOTAL
+  ========================== */
+
+  const numericAmount =
+    Number(
+      departureAmount.replace(
+        /[₦,]/g,
+        ""
+      )
+    );
+
+  const departureTotal =
+    numericAmount *
+    requestedSeats;
+
+  /* =========================
+     CONTINUE
+  ========================== */
+
+  const handleContinue = () => {
+
+    if (
+      selectedSeats.length !==
+      requestedSeats
+    ) {
+
+      alert(
+        `Please select ${requestedSeats} seat(s)`
+      );
+
+      return;
+    }
+
     router.push(
-      `/bookings/round-trip/select-departure-seats?from=${encodeURIComponent(
+      `/bookings/round-trip/select-return-seats?from=${encodeURIComponent(
         from
       )}&to=${encodeURIComponent(
         to
-      )}&vehicle=${encodeURIComponent(
-        vehicle
       )}&seats=${encodeURIComponent(
         seats
       )}&departureDate=${encodeURIComponent(
         departureDate
       )}&returnDate=${encodeURIComponent(
         returnDate
-      )}&departureTime=${encodeURIComponent(
-        departureTime
       )}&departureVehicle=${encodeURIComponent(
         departureVehicle
+      )}&departureTime=${encodeURIComponent(
+        departureTime
       )}&departureAmount=${encodeURIComponent(
         departureAmount
-      )}&returnTime=${encodeURIComponent(
-        trip.time
       )}&returnVehicle=${encodeURIComponent(
-        trip.vehicle
+        returnVehicle
+      )}&returnTime=${encodeURIComponent(
+        returnTime
       )}&returnAmount=${encodeURIComponent(
-        trip.amount
+        returnAmount
+      )}&selectedDepartureSeats=${encodeURIComponent(
+        selectedSeats.join(
+          ", "
+        )
       )}`
     );
   };
@@ -138,217 +249,288 @@ export default function SelectReturnPage() {
 
       <Navbar />
 
-      {/* =====================================
-          HERO
-      ===================================== */}
+      <section className="section-spacing">
 
-      <section className="relative flex min-h-[280px] items-center justify-center overflow-hidden">
+        <div className="page-container">
 
-        {/* BACKGROUND */}
+          <div className="responsive-grid">
 
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1883&auto=format&fit=crop')",
-          }}
-        />
+            {/* =========================
+                LEFT
+            ========================== */}
 
-        {/* OVERLAY */}
+            <div className="bg-white p-6 shadow-sm lg:p-14">
 
-        <div className="absolute inset-0 bg-black/70" />
-
-        {/* CONTENT */}
-
-        <div className="relative z-10 px-5 text-center text-white">
-
-          <p className="text-[12px] uppercase tracking-[6px] text-[#00A878]">
-            Round Trip
-          </p>
-
-          <h1 className="mt-5 text-[40px] lg:text-[68px] font-light uppercase leading-[1.1]">
-
-            Select
-            <br />
-            Return Trip
-          </h1>
-        </div>
-      </section>
-
-      {/* =====================================
-          RETURN TRIPS
-      ===================================== */}
-
-      <section className="px-5 py-24 lg:px-10">
-
-        <div className="mx-auto max-w-[1300px]">
-
-          {/* HEADER */}
-
-          <div className="mb-16">
-
-            <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
-              Return Journey
-            </p>
-
-            <h2 className="mt-5 text-[34px] lg:text-[56px] font-light uppercase leading-[1.1] text-[#222]">
-
-              {to}
-              <br />
-              To
-              <br />
-              {from}
-            </h2>
-
-            {/* SUMMARY */}
-
-            <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-4">
-
-              {/* DEPARTURE */}
+              {/* HEADER */}
 
               <div>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Departure Trip
+                <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
+
+                  Departure Seat Selection
                 </p>
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {departureTime}
-                </p>
+                <h1 className="page-title mt-5 leading-[1.1] text-[#222]">
 
-                <p className="mt-2 text-[15px] text-[#666]">
-                  {departureVehicle}
-                </p>
-              </div>
+                  Select
+                  <br />
+                  Departure Seats
+                </h1>
 
-              {/* DEPARTURE DATE */}
+                <p className="mt-6 text-[15px] leading-[30px] text-[#666]">
 
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Departure Date
-                </p>
-
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {departureDate}
+                  Choose your preferred
+                  departure seats for your
+                  outbound journey.
                 </p>
               </div>
 
-              {/* RETURN DATE */}
+              {/* LEGEND */}
 
-              <div>
+              <div className="mt-12 flex flex-wrap gap-6 lg:mt-14">
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Return Date
-                </p>
+                {/* BOOKED */}
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {returnDate}
-                </p>
+                <div className="flex items-center gap-3">
+
+                  <div className="h-[18px] w-[18px] bg-[#ff6b81]" />
+
+                  <p className="text-[14px] text-[#555]">
+
+                    Booked
+                  </p>
+                </div>
+
+                {/* AVAILABLE */}
+
+                <div className="flex items-center gap-3">
+
+                  <div className="h-[18px] w-[18px] border border-[#ccc] bg-white" />
+
+                  <p className="text-[14px] text-[#555]">
+
+                    Available
+                  </p>
+                </div>
+
+                {/* SELECTED */}
+
+                <div className="flex items-center gap-3">
+
+                  <div className="h-[18px] w-[18px] bg-[#00A878]" />
+
+                  <p className="text-[14px] text-[#555]">
+
+                    Selected
+                  </p>
+                </div>
               </div>
 
-              {/* SEATS */}
+              {/* VEHICLE LAYOUT */}
 
-              <div>
+              <div className="seat-layout-wrapper mt-14 lg:mt-16">
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Seats Requested
-                </p>
+                <div className="w-fit rounded-[24px] border-2 border-[#222] bg-[#f9f9f9] px-6 py-8 sm:px-10 sm:py-10 lg:px-12 lg:py-12">
 
-                <p className="mt-3 text-[18px] text-[#222]">
-                  {seats}
-                </p>
-              </div>
-            </div>
-          </div>
+                  {/* DRIVER */}
 
-          {/* RETURN TRIP CARDS */}
+                  <div className="mb-10">
 
-          <div className="space-y-10">
+                    <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border-[3px] border-[#555] text-[28px] lg:h-[70px] lg:w-[70px] lg:text-[34px]">
 
-            {returnTrips.map(
-              (trip) => (
-                <div
-                  key={trip.id}
-                  className="bg-white p-8 shadow-sm lg:p-10"
-                >
-
-                  {/* TOP */}
-
-                  <div className="border-b border-[#e5e5e5] pb-6">
-
-                    <h3 className="text-[36px] font-light text-[#00A878]">
-
-                      {trip.time}
-                    </h3>
+                      🛞
+                    </div>
                   </div>
 
-                  {/* CONTENT */}
+                  {/* SEATS */}
 
-                  <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-center">
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-7">
 
-                    {/* VEHICLE */}
+                    {allSeats.map(
+                      (seat) => {
 
-                    <div>
+                        const isOccupied =
+                          occupiedSeats.includes(
+                            seat
+                          );
 
-                      <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                        Vehicle
-                      </p>
+                        const isSelected =
+                          selectedSeats.includes(
+                            seat
+                          );
 
-                      <p className="mt-3 text-[28px] font-light text-[#222]">
+                        return (
 
-                        {trip.vehicle}
-                      </p>
-                    </div>
-
-                    {/* AVAILABILITY */}
-
-                    <div>
-
-                      <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                        Availability
-                      </p>
-
-                      <p className="mt-3 text-[22px] text-[#ff4d4d]">
-
-                        {trip.availability}
-                      </p>
-                    </div>
-
-                    {/* AMOUNT */}
-
-                    <div>
-
-                      <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                        Amount
-                      </p>
-
-                      <p className="mt-3 text-[34px] font-light text-[#222]">
-
-                        {trip.amount}
-                      </p>
-
-                      <p className="mt-1 text-[14px] text-[#666]">
-                        per seat
-                      </p>
-                    </div>
-
-                    {/* BUTTON */}
-
-                    <button
-                      onClick={() =>
-                        handleSelectReturn(
-                          trip
-                        )
+                          <button
+                            key={seat}
+                            onClick={() =>
+                              handleSeatClick(
+                                seat
+                              )
+                            }
+                            disabled={
+                              isOccupied
+                            }
+                            className={`flex h-[58px] w-[68px] items-center justify-center border text-[18px] font-light transition-all duration-200 sm:h-[64px] sm:w-[76px] lg:h-[70px] lg:w-[84px] lg:text-[20px] ${
+                              isOccupied
+                                ? "cursor-not-allowed border-[#ff6b81] bg-[#ff6b81] text-white"
+                                : isSelected
+                                ? "border-[#00A878] bg-[#00A878] text-white"
+                                : "border-[#d8d8d8] bg-white text-[#222] hover:border-[#00A878] hover:bg-[#00A878] hover:text-white"
+                            }`}
+                          >
+                            {seat}
+                          </button>
+                        );
                       }
-                      className="h-[58px] bg-[#00A878] px-10 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
-                    >
-                      Select Return
-                    </button>
+                    )}
                   </div>
                 </div>
-              )
-            )}
+              </div>
+
+              {/* BUTTON */}
+
+              <button
+                onClick={
+                  handleContinue
+                }
+                className="primary-button mt-14 lg:mt-16"
+              >
+
+                Continue To Return Seats
+              </button>
+            </div>
+
+            {/* =========================
+                SUMMARY
+            ========================== */}
+
+            <div className="summary-card">
+
+              <div className="bg-white p-8 shadow-sm lg:p-10">
+
+                <h2 className="text-[30px] font-light text-[#222]">
+
+                  Trip Summary
+                </h2>
+
+                <div className="mt-10 space-y-10">
+
+                  {/* DEPARTURE */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Departure Trip
+                    </p>
+
+                    <div className="mt-4 space-y-2">
+
+                      <p className="text-[18px] text-[#222]">
+
+                        {from} → {to}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {
+                          departureTime
+                        }
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {
+                          departureVehicle
+                        }
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* RETURN */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Return Trip
+                    </p>
+
+                    <div className="mt-4 space-y-2">
+
+                      <p className="text-[18px] text-[#222]">
+
+                        {to} → {from}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {returnTime}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {
+                          returnVehicle
+                        }
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* SEATS */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Selected Seats
+                    </p>
+
+                    <p className="mt-4 break-words text-[18px] text-[#222]">
+
+                      {selectedSeats.join(
+                        ", "
+                      ) || "None"}
+                    </p>
+                  </div>
+
+                  {/* PASSENGERS */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Passengers
+                    </p>
+
+                    <p className="mt-4 text-[18px] text-[#222]">
+
+                      {
+                        requestedSeats
+                      }{" "}
+                      Passenger(s)
+                    </p>
+                  </div>
+
+                  {/* TOTAL */}
+
+                  <div className="border-t border-[#e5e5e5] pt-8">
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Departure Total
+                    </p>
+
+                    <p className="mt-3 break-words text-[34px] font-light text-[#00A878] lg:text-[42px]">
+
+                      ₦
+                      {departureTotal.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

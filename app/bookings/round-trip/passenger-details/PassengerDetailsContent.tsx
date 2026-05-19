@@ -1,4 +1,5 @@
 "use client";
+
 export const dynamic =
   "force-dynamic";
 
@@ -19,9 +20,9 @@ export default function RoundTripPassengerDetailsPage() {
   const searchParams =
     useSearchParams();
 
-  /* =====================================
+  /* =========================
      QUERY PARAMS
-  ===================================== */
+  ========================== */
 
   const from =
     searchParams.get("from") || "";
@@ -84,9 +85,9 @@ export default function RoundTripPassengerDetailsPage() {
       "grandTotal"
     ) || "0";
 
-  /* =====================================
+  /* =========================
      SEAT ARRAYS
-  ===================================== */
+  ========================== */
 
   const departureSeatArray =
     selectedDepartureSeats
@@ -104,9 +105,9 @@ export default function RoundTripPassengerDetailsPage() {
       )
       .filter(Boolean);
 
-  /* =====================================
+  /* =========================
      PASSENGERS
-  ===================================== */
+  ========================== */
 
   const [passengers, setPassengers] =
     useState(
@@ -127,9 +128,9 @@ export default function RoundTripPassengerDetailsPage() {
       )
     );
 
-  /* =====================================
+  /* =========================
      HANDLE CHANGE
-  ===================================== */
+  ========================== */
 
   const handleChange = (
     index: number,
@@ -151,9 +152,9 @@ export default function RoundTripPassengerDetailsPage() {
     );
   };
 
-  /* =====================================
+  /* =========================
      CONTINUE
-  ===================================== */
+  ========================== */
 
   const handleContinue = () => {
 
@@ -193,298 +194,325 @@ export default function RoundTripPassengerDetailsPage() {
 
       <Navbar />
 
-      <section className="px-5 py-24 lg:px-10">
+      <section className="section-spacing">
 
-        <div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-14 lg:grid-cols-[1fr_360px]">
+        <div className="page-container">
 
-          {/* =====================================
-              LEFT
-          ===================================== */}
+          <div className="responsive-grid">
 
-          <div className="bg-white p-8 shadow-sm lg:p-14">
+            {/* =========================
+                LEFT
+            ========================== */}
 
-            {/* HEADER */}
+            <div className="bg-white p-6 shadow-sm lg:p-14">
 
-            <div>
-
-              <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
-                Passenger Information
-              </p>
-
-              <h1 className="mt-5 text-[36px] lg:text-[58px] font-light uppercase leading-[1.1] text-[#222]">
-
-                Passenger
-                <br />
-                Details
-              </h1>
-
-              <p className="mt-6 max-w-[700px] text-[16px] leading-[30px] text-[#666]">
-                Kindly provide accurate
-                passenger information for
-                all travelers included in
-                this round-trip booking.
-              </p>
-            </div>
-
-            {/* PASSENGERS */}
-
-            <div className="mt-16 space-y-16">
-
-              {passengers.map(
-                (
-                  passenger,
-                  index
-                ) => (
-                  <div
-                    key={index}
-                    className="border-b border-[#e5e5e5] pb-14"
-                  >
-
-                    {/* TITLE */}
-
-                    <div className="mb-10">
-
-                      <h2 className="text-[28px] font-light uppercase text-[#222]">
-
-                        Passenger{" "}
-                        {index + 1}
-                      </h2>
-
-                      <div className="mt-4 flex flex-wrap gap-8">
-
-                        <p className="text-[15px] text-[#00A878]">
-
-                          Departure Seat:
-                          {" "}
-                          {
-                            passenger.departureSeat
-                          }
-                        </p>
-
-                        <p className="text-[15px] text-[#00A878]">
-
-                          Return Seat:
-                          {" "}
-                          {
-                            passenger.returnSeat
-                          }
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* FORM */}
-
-                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-
-                      {/* FULL NAME */}
-
-                      <div>
-
-                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                          Full Name
-                        </label>
-
-                        <input
-                          type="text"
-                          placeholder="Enter full name"
-                          value={
-                            passenger.fullName
-                          }
-                          onChange={(
-                            e
-                          ) =>
-                            handleChange(
-                              index,
-                              "fullName",
-                              e.target.value
-                            )
-                          }
-                          className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                        />
-                      </div>
-
-                      {/* EMAIL */}
-
-                      <div>
-
-                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                          Email Address
-                        </label>
-
-                        <input
-                          type="email"
-                          placeholder="Enter email address"
-                          value={
-                            passenger.email
-                          }
-                          onChange={(
-                            e
-                          ) =>
-                            handleChange(
-                              index,
-                              "email",
-                              e.target.value
-                            )
-                          }
-                          className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                        />
-                      </div>
-
-                      {/* PHONE */}
-
-                      <div>
-
-                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                          Phone Number
-                        </label>
-
-                        <input
-                          type="tel"
-                          placeholder="Enter phone number"
-                          value={
-                            passenger.phone
-                          }
-                          onChange={(
-                            e
-                          ) =>
-                            handleChange(
-                              index,
-                              "phone",
-                              e.target.value
-                            )
-                          }
-                          className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
-
-            {/* BUTTON */}
-
-            <button
-              onClick={
-                handleContinue
-              }
-              className="mt-16 h-[60px] bg-[#00A878] px-12 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
-            >
-              Proceed To Payment
-            </button>
-          </div>
-
-          {/* =====================================
-              SUMMARY
-          ===================================== */}
-
-          <div className="sticky top-[120px] h-fit bg-white px-8 py-10 shadow-sm">
-
-            <h2 className="text-[30px] font-light text-[#222]">
-              Trip Summary
-            </h2>
-
-            <div className="mt-10 space-y-10">
-
-              {/* DEPARTURE */}
+              {/* HEADER */}
 
               <div>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Departure Journey
+                <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
+
+                  Passenger Information
                 </p>
 
-                <div className="mt-4 space-y-2">
+                <h1 className="page-title mt-5 leading-[1.1] text-[#222]">
 
-                  <p className="text-[18px] text-[#222]">
-                    {from} → {to}
-                  </p>
+                  Passenger
+                  <br />
+                  Details
+                </h1>
 
-                  <p className="text-[15px] text-[#666]">
-                    {
-                      departureTime
-                    }
-                  </p>
+                <p className="mt-6 max-w-[700px] text-[15px] leading-[30px] text-[#666]">
 
-                  <p className="text-[15px] text-[#666]">
-                    {
-                      departureVehicle
-                    }
-                  </p>
-
-                  <p className="text-[15px] text-[#00A878]">
-                    Seats:{" "}
-                    {
-                      selectedDepartureSeats
-                    }
-                  </p>
-                </div>
-              </div>
-
-              {/* RETURN */}
-
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Return Journey
+                  Kindly provide accurate
+                  passenger information for
+                  all travelers included in
+                  this round-trip booking.
                 </p>
-
-                <div className="mt-4 space-y-2">
-
-                  <p className="text-[18px] text-[#222]">
-                    {to} → {from}
-                  </p>
-
-                  <p className="text-[15px] text-[#666]">
-                    {returnTime}
-                  </p>
-
-                  <p className="text-[15px] text-[#666]">
-                    {
-                      returnVehicle
-                    }
-                  </p>
-
-                  <p className="text-[15px] text-[#00A878]">
-                    Seats:{" "}
-                    {
-                      selectedReturnSeats
-                    }
-                  </p>
-                </div>
               </div>
 
               {/* PASSENGERS */}
 
-              <div>
+              <div className="mt-14 space-y-14 lg:mt-16 lg:space-y-16">
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Passenger Count
-                </p>
+                {passengers.map(
+                  (
+                    passenger,
+                    index
+                  ) => (
 
-                <p className="mt-4 text-[18px] text-[#222]">
-                  {
-                    passengers.length
-                  }{" "}
-                  Passenger(s)
-                </p>
+                    <div
+                      key={index}
+                      className="border-b border-[#e5e5e5] pb-12 lg:pb-14"
+                    >
+
+                      {/* TITLE */}
+
+                      <div className="mb-8 lg:mb-10">
+
+                        <h2 className="text-[24px] font-light uppercase text-[#222] lg:text-[28px]">
+
+                          Passenger{" "}
+                          {index + 1}
+                        </h2>
+
+                        <div className="mt-4 flex flex-col gap-2 lg:flex-row lg:flex-wrap lg:gap-8">
+
+                          <p className="text-[15px] text-[#00A878]">
+
+                            Departure Seat:
+                            {" "}
+                            {
+                              passenger.departureSeat
+                            }
+                          </p>
+
+                          <p className="text-[15px] text-[#00A878]">
+
+                            Return Seat:
+                            {" "}
+                            {
+                              passenger.returnSeat
+                            }
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* FORM */}
+
+                      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+
+                        {/* FULL NAME */}
+
+                        <div>
+
+                          <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                            Full Name
+                          </label>
+
+                          <input
+                            type="text"
+                            placeholder="Enter full name"
+                            value={
+                              passenger.fullName
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              handleChange(
+                                index,
+                                "fullName",
+                                e.target.value
+                              )
+                            }
+                            className="form-input bg-[#f8f8f8] placeholder:text-[#999] focus:border-[#00A878]"
+                          />
+                        </div>
+
+                        {/* EMAIL */}
+
+                        <div>
+
+                          <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                            Email Address
+                          </label>
+
+                          <input
+                            type="email"
+                            placeholder="Enter email address"
+                            value={
+                              passenger.email
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              handleChange(
+                                index,
+                                "email",
+                                e.target.value
+                              )
+                            }
+                            className="form-input bg-[#f8f8f8] placeholder:text-[#999] focus:border-[#00A878]"
+                          />
+                        </div>
+
+                        {/* PHONE */}
+
+                        <div>
+
+                          <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                            Phone Number
+                          </label>
+
+                          <input
+                            type="tel"
+                            placeholder="Enter phone number"
+                            value={
+                              passenger.phone
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              handleChange(
+                                index,
+                                "phone",
+                                e.target.value
+                              )
+                            }
+                            className="form-input bg-[#f8f8f8] placeholder:text-[#999] focus:border-[#00A878]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
 
-              {/* TOTAL */}
+              {/* BUTTON */}
 
-              <div className="border-t border-[#e5e5e5] pt-8">
+              <button
+                onClick={
+                  handleContinue
+                }
+                className="primary-button mt-14 lg:mt-16"
+              >
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Grand Total
-                </p>
+                Proceed To Payment
+              </button>
+            </div>
 
-                <p className="mt-3 text-[42px] font-light text-[#00A878]">
+            {/* =========================
+                SUMMARY
+            ========================== */}
 
-                  ₦
-                  {Number(
-                    grandTotal
-                  ).toLocaleString()}
-                </p>
+            <div className="summary-card">
+
+              <div className="bg-white p-8 shadow-sm lg:p-10">
+
+                <h2 className="text-[30px] font-light text-[#222]">
+
+                  Trip Summary
+                </h2>
+
+                <div className="mt-10 space-y-10">
+
+                  {/* DEPARTURE */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Departure Journey
+                    </p>
+
+                    <div className="mt-4 space-y-2">
+
+                      <p className="text-[18px] text-[#222]">
+
+                        {from} → {to}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {
+                          departureTime
+                        }
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {
+                          departureVehicle
+                        }
+                      </p>
+
+                      <p className="break-words text-[15px] text-[#00A878]">
+
+                        Seats:{" "}
+                        {
+                          selectedDepartureSeats
+                        }
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* RETURN */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Return Journey
+                    </p>
+
+                    <div className="mt-4 space-y-2">
+
+                      <p className="text-[18px] text-[#222]">
+
+                        {to} → {from}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {returnTime}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {
+                          returnVehicle
+                        }
+                      </p>
+
+                      <p className="break-words text-[15px] text-[#00A878]">
+
+                        Seats:{" "}
+                        {
+                          selectedReturnSeats
+                        }
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* PASSENGERS */}
+
+                  <div>
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Passenger Count
+                    </p>
+
+                    <p className="mt-4 text-[18px] text-[#222]">
+
+                      {
+                        passengers.length
+                      }{" "}
+                      Passenger(s)
+                    </p>
+                  </div>
+
+                  {/* TOTAL */}
+
+                  <div className="border-t border-[#e5e5e5] pt-8">
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Grand Total
+                    </p>
+
+                    <p className="mt-3 break-words text-[34px] font-light text-[#00A878] lg:text-[42px]">
+
+                      ₦
+                      {Number(
+                        grandTotal
+                      ).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

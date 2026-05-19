@@ -1,4 +1,5 @@
 "use client";
+
 export const dynamic =
   "force-dynamic";
 
@@ -19,9 +20,9 @@ export default function SelectReturnSeatsPage() {
   const searchParams =
     useSearchParams();
 
-  /* =====================================
+  /* =========================
      QUERY PARAMS
-  ===================================== */
+  ========================== */
 
   const from =
     searchParams.get("from") || "";
@@ -42,9 +43,9 @@ export default function SelectReturnSeatsPage() {
       "returnDate"
     ) || "";
 
-  /* =====================================
+  /* =========================
      DEPARTURE DETAILS
-  ===================================== */
+  ========================== */
 
   const departureVehicle =
     searchParams.get(
@@ -66,9 +67,9 @@ export default function SelectReturnSeatsPage() {
       "selectedDepartureSeats"
     ) || "";
 
-  /* =====================================
+  /* =========================
      RETURN DETAILS
-  ===================================== */
+  ========================== */
 
   const returnVehicle =
     searchParams.get(
@@ -85,9 +86,9 @@ export default function SelectReturnSeatsPage() {
       "returnAmount"
     ) || "₦13,500";
 
-  /* =====================================
+  /* =========================
      CONFIG
-  ===================================== */
+  ========================== */
 
   const requestedSeats =
     Number(seats);
@@ -122,9 +123,9 @@ export default function SelectReturnSeatsPage() {
       (_, i) => i + 1
     );
 
-  /* =====================================
+  /* =========================
      SELECTED RETURN SEATS
-  ===================================== */
+  ========================== */
 
   const [
     selectedReturnSeats,
@@ -133,9 +134,9 @@ export default function SelectReturnSeatsPage() {
     []
   );
 
-  /* =====================================
+  /* =========================
      HANDLE CLICK
-  ===================================== */
+  ========================== */
 
   const handleSeatClick = (
     seat: number
@@ -183,9 +184,9 @@ export default function SelectReturnSeatsPage() {
     ]);
   };
 
-  /* =====================================
+  /* =========================
      TOTALS
-  ===================================== */
+  ========================== */
 
   const departureNumeric =
     Number(
@@ -215,9 +216,9 @@ export default function SelectReturnSeatsPage() {
     departureTotal +
     returnTotal;
 
-  /* =====================================
+  /* =========================
      CONTINUE
-  ===================================== */
+  ========================== */
 
   const handleContinue = () => {
 
@@ -273,278 +274,319 @@ export default function SelectReturnSeatsPage() {
 
       <Navbar />
 
-      <section className="px-5 py-24 lg:px-10">
+      <section className="section-spacing">
 
-        <div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-14 lg:grid-cols-[1fr_360px]">
+        <div className="page-container">
 
-          {/* =====================================
-              LEFT
-          ===================================== */}
+          <div className="responsive-grid">
 
-          <div className="bg-white p-8 shadow-sm lg:p-14">
+            {/* =========================
+                LEFT
+            ========================== */}
 
-            {/* HEADER */}
+            <div className="bg-white p-6 shadow-sm lg:p-14">
 
-            <div>
+              {/* HEADER */}
 
-              <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
-                Return Seat Selection
-              </p>
+              <div>
 
-              <h1 className="mt-5 text-[36px] lg:text-[56px] font-light uppercase leading-[1.1] text-[#222]">
+                <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
 
-                Select
-                <br />
-                Return Seats
-              </h1>
+                  Return Seat Selection
+                </p>
 
-              <p className="mt-6 text-[16px] leading-[30px] text-[#666]">
-                Choose your preferred
-                seats for your return
-                journey.
-              </p>
-            </div>
+                <h1 className="page-title mt-5 leading-[1.1] text-[#222]">
 
-            {/* LEGEND */}
+                  Select
+                  <br />
+                  Return Seats
+                </h1>
 
-            <div className="mt-14 flex flex-wrap gap-6">
+                <p className="mt-6 text-[15px] leading-[30px] text-[#666]">
 
-              <div className="flex items-center gap-3">
-
-                <div className="h-[18px] w-[18px] bg-[#ff6b81]" />
-
-                <p className="text-[14px] text-[#555]">
-                  Booked
+                  Choose your preferred
+                  seats for your return
+                  journey.
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
+              {/* LEGEND */}
 
-                <div className="h-[18px] w-[18px] border border-[#ccc] bg-white" />
+              <div className="mt-12 flex flex-wrap gap-6 lg:mt-14">
 
-                <p className="text-[14px] text-[#555]">
-                  Available
-                </p>
+                {/* BOOKED */}
+
+                <div className="flex items-center gap-3">
+
+                  <div className="h-[18px] w-[18px] bg-[#ff6b81]" />
+
+                  <p className="text-[14px] text-[#555]">
+
+                    Booked
+                  </p>
+                </div>
+
+                {/* AVAILABLE */}
+
+                <div className="flex items-center gap-3">
+
+                  <div className="h-[18px] w-[18px] border border-[#ccc] bg-white" />
+
+                  <p className="text-[14px] text-[#555]">
+
+                    Available
+                  </p>
+                </div>
+
+                {/* SELECTED */}
+
+                <div className="flex items-center gap-3">
+
+                  <div className="h-[18px] w-[18px] bg-[#00A878]" />
+
+                  <p className="text-[14px] text-[#555]">
+
+                    Selected
+                  </p>
+                </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              {/* VEHICLE LAYOUT */}
 
-                <div className="h-[18px] w-[18px] bg-[#00A878]" />
+              <div className="seat-layout-wrapper mt-14 lg:mt-16">
 
-                <p className="text-[14px] text-[#555]">
-                  Selected
-                </p>
-              </div>
-            </div>
+                <div className="w-fit rounded-[24px] border-2 border-[#222] bg-[#f9f9f9] px-6 py-8 sm:px-10 sm:py-10 lg:px-12 lg:py-12">
 
-            {/* VEHICLE */}
+                  {/* DRIVER */}
 
-            <div className="mt-16 overflow-x-auto">
+                  <div className="mb-10">
 
-              <div className="w-fit rounded-[24px] border-2 border-[#222] bg-[#f9f9f9] px-12 py-12">
+                    <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border-[3px] border-[#555] text-[28px] lg:h-[70px] lg:w-[70px] lg:text-[34px]">
 
-                {/* DRIVER */}
+                      🛞
+                    </div>
+                  </div>
 
-                <div className="mb-10">
+                  {/* SEATS */}
 
-                  <div className="flex h-[70px] w-[70px] items-center justify-center rounded-full border-[3px] border-[#555] text-[34px]">
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-7">
 
-                    🛞
+                    {allSeats.map(
+                      (seat) => {
+
+                        const isOccupied =
+                          occupiedSeats.includes(
+                            seat
+                          );
+
+                        const isSelected =
+                          selectedReturnSeats.includes(
+                            seat
+                          );
+
+                        return (
+
+                          <button
+                            key={seat}
+                            onClick={() =>
+                              handleSeatClick(
+                                seat
+                              )
+                            }
+                            disabled={
+                              isOccupied
+                            }
+                            className={`flex h-[58px] w-[68px] items-center justify-center border text-[18px] font-light transition-all duration-200 sm:h-[64px] sm:w-[76px] lg:h-[70px] lg:w-[84px] lg:text-[20px] ${
+                              isOccupied
+                                ? "cursor-not-allowed border-[#ff6b81] bg-[#ff6b81] text-white"
+                                : isSelected
+                                ? "border-[#00A878] bg-[#00A878] text-white"
+                                : "border-[#d8d8d8] bg-white text-[#222] hover:border-[#00A878] hover:bg-[#00A878] hover:text-white"
+                            }`}
+                          >
+                            {seat}
+                          </button>
+                        );
+                      }
+                    )}
                   </div>
                 </div>
-
-                {/* SEATS */}
-
-                <div className="grid grid-cols-2 gap-x-12 gap-y-7">
-
-                  {allSeats.map(
-                    (seat) => {
-
-                      const isOccupied =
-                        occupiedSeats.includes(
-                          seat
-                        );
-
-                      const isSelected =
-                        selectedReturnSeats.includes(
-                          seat
-                        );
-
-                      return (
-                        <button
-                          key={seat}
-                          onClick={() =>
-                            handleSeatClick(
-                              seat
-                            )
-                          }
-                          disabled={
-                            isOccupied
-                          }
-                          className={`flex h-[70px] w-[84px] items-center justify-center border text-[20px] font-light transition-all duration-200 ${
-                            isOccupied
-                              ? "cursor-not-allowed border-[#ff6b81] bg-[#ff6b81] text-white"
-                              : isSelected
-                              ? "border-[#00A878] bg-[#00A878] text-white"
-                              : "border-[#d8d8d8] bg-white text-[#222] hover:border-[#00A878] hover:bg-[#00A878] hover:text-white"
-                          }`}
-                        >
-                          {seat}
-                        </button>
-                      );
-                    }
-                  )}
-                </div>
               </div>
+
+              {/* BUTTON */}
+
+              <button
+                onClick={
+                  handleContinue
+                }
+                className="primary-button mt-14 lg:mt-16"
+              >
+
+                Continue To Passenger Details
+              </button>
             </div>
 
-            {/* BUTTON */}
+            {/* =========================
+                SUMMARY
+            ========================== */}
 
-            <button
-              onClick={
-                handleContinue
-              }
-              className="mt-16 h-[60px] bg-[#00A878] px-12 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
-            >
-              Continue To Passenger Details
-            </button>
-          </div>
+            <div className="summary-card">
 
-          {/* =====================================
-              SUMMARY
-          ===================================== */}
+              <div className="bg-white p-8 shadow-sm lg:p-10">
 
-          <div className="sticky top-[120px] h-fit bg-white px-8 py-10 shadow-sm">
+                <h2 className="text-[30px] font-light text-[#222]">
 
-            <h2 className="text-[30px] font-light text-[#222]">
-              Trip Summary
-            </h2>
+                  Trip Summary
+                </h2>
 
-            <div className="mt-10 space-y-10">
+                <div className="mt-10 space-y-10">
 
-              {/* DEPARTURE */}
+                  {/* DEPARTURE */}
 
-              <div>
+                  <div>
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Departure Trip
-                </p>
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-                <div className="mt-4 space-y-2">
+                      Departure Trip
+                    </p>
 
-                  <p className="text-[18px] text-[#222]">
-                    {from} → {to}
-                  </p>
+                    <div className="mt-4 space-y-2">
 
-                  <p className="text-[15px] text-[#666]">
-                    {departureTime}
-                  </p>
+                      <p className="text-[18px] text-[#222]">
 
-                  <p className="text-[15px] text-[#666]">
-                    {
-                      departureVehicle
-                    }
-                  </p>
+                        {from} → {to}
+                      </p>
 
-                  <p className="text-[15px] text-[#00A878]">
-                    Seats:{" "}
-                    {
-                      selectedDepartureSeats
-                    }
-                  </p>
-                </div>
-              </div>
+                      <p className="text-[15px] text-[#666]">
 
-              {/* RETURN */}
+                        {departureTime}
+                      </p>
 
-              <div>
+                      <p className="text-[15px] text-[#666]">
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Return Trip
-                </p>
+                        {
+                          departureVehicle
+                        }
+                      </p>
 
-                <div className="mt-4 space-y-2">
+                      <p className="break-words text-[15px] text-[#00A878]">
 
-                  <p className="text-[18px] text-[#222]">
-                    {to} → {from}
-                  </p>
+                        Seats:{" "}
+                        {
+                          selectedDepartureSeats
+                        }
+                      </p>
+                    </div>
+                  </div>
 
-                  <p className="text-[15px] text-[#666]">
-                    {returnTime}
-                  </p>
+                  {/* RETURN */}
 
-                  <p className="text-[15px] text-[#666]">
-                    {
-                      returnVehicle
-                    }
-                  </p>
+                  <div>
 
-                  <p className="text-[15px] text-[#00A878]">
-                    Seats:{" "}
-                    {selectedReturnSeats.join(
-                      ", "
-                    )}
-                  </p>
-                </div>
-              </div>
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-              {/* PASSENGERS */}
+                      Return Trip
+                    </p>
 
-              <div>
+                    <div className="mt-4 space-y-2">
 
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Passengers
-                </p>
+                      <p className="text-[18px] text-[#222]">
 
-                <p className="mt-4 text-[18px] text-[#222]">
-                  {
-                    requestedSeats
-                  }{" "}
-                  Passenger(s)
-                </p>
-              </div>
+                        {to} → {from}
+                      </p>
 
-              {/* TOTALS */}
+                      <p className="text-[15px] text-[#666]">
 
-              <div className="border-t border-[#e5e5e5] pt-8 space-y-6">
+                        {returnTime}
+                      </p>
 
-                <div>
+                      <p className="text-[15px] text-[#666]">
 
-                  <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                    Departure Total
-                  </p>
+                        {
+                          returnVehicle
+                        }
+                      </p>
 
-                  <p className="mt-2 text-[26px] font-light text-[#222]">
+                      <p className="break-words text-[15px] text-[#00A878]">
 
-                    ₦
-                    {departureTotal.toLocaleString()}
-                  </p>
-                </div>
+                        Seats:{" "}
+                        {selectedReturnSeats.join(
+                          ", "
+                        ) || "None"}
+                      </p>
+                    </div>
+                  </div>
 
-                <div>
+                  {/* PASSENGERS */}
 
-                  <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                    Return Total
-                  </p>
+                  <div>
 
-                  <p className="mt-2 text-[26px] font-light text-[#222]">
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-                    ₦
-                    {returnTotal.toLocaleString()}
-                  </p>
-                </div>
+                      Passengers
+                    </p>
 
-                <div className="border-t border-[#e5e5e5] pt-6">
+                    <p className="mt-4 text-[18px] text-[#222]">
 
-                  <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                    Grand Total
-                  </p>
+                      {
+                        requestedSeats
+                      }{" "}
+                      Passenger(s)
+                    </p>
+                  </div>
 
-                  <p className="mt-3 text-[42px] font-light text-[#00A878]">
+                  {/* TOTALS */}
 
-                    ₦
-                    {grandTotal.toLocaleString()}
-                  </p>
+                  <div className="border-t border-[#e5e5e5] pt-8 space-y-6">
+
+                    {/* DEPARTURE TOTAL */}
+
+                    <div>
+
+                      <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                        Departure Total
+                      </p>
+
+                      <p className="mt-2 text-[26px] font-light text-[#222]">
+
+                        ₦
+                        {departureTotal.toLocaleString()}
+                      </p>
+                    </div>
+
+                    {/* RETURN TOTAL */}
+
+                    <div>
+
+                      <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                        Return Total
+                      </p>
+
+                      <p className="mt-2 text-[26px] font-light text-[#222]">
+
+                        ₦
+                        {returnTotal.toLocaleString()}
+                      </p>
+                    </div>
+
+                    {/* GRAND TOTAL */}
+
+                    <div className="border-t border-[#e5e5e5] pt-6">
+
+                      <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                        Grand Total
+                      </p>
+
+                      <p className="mt-3 break-words text-[34px] font-light text-[#00A878] lg:text-[42px]">
+
+                        ₦
+                        {grandTotal.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

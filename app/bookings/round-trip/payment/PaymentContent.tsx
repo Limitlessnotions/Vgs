@@ -1,4 +1,5 @@
 "use client";
+
 export const dynamic =
   "force-dynamic";
 
@@ -19,9 +20,9 @@ export default function RoundTripPaymentPage() {
   const searchParams =
     useSearchParams();
 
-  /* =====================================
+  /* =========================
      QUERY PARAMS
-  ===================================== */
+  ========================== */
 
   const from =
     searchParams.get("from") || "";
@@ -39,9 +40,9 @@ export default function RoundTripPaymentPage() {
       "returnDate"
     ) || "";
 
-  /* =====================================
+  /* =========================
      DEPARTURE
-  ===================================== */
+  ========================== */
 
   const departureVehicle =
     searchParams.get(
@@ -63,9 +64,9 @@ export default function RoundTripPaymentPage() {
       "selectedDepartureSeats"
     ) || "";
 
-  /* =====================================
+  /* =========================
      RETURN
-  ===================================== */
+  ========================== */
 
   const returnVehicle =
     searchParams.get(
@@ -87,18 +88,18 @@ export default function RoundTripPaymentPage() {
       "selectedReturnSeats"
     ) || "";
 
-  /* =====================================
+  /* =========================
      TOTAL
-  ===================================== */
+  ========================== */
 
   const grandTotal =
     searchParams.get(
       "grandTotal"
     ) || "0";
 
-  /* =====================================
+  /* =========================
      PASSENGERS
-  ===================================== */
+  ========================== */
 
   const departureSeatArray =
     selectedDepartureSeats
@@ -108,18 +109,18 @@ export default function RoundTripPaymentPage() {
       )
       .filter(Boolean);
 
-  /* =====================================
+  /* =========================
      PAYMENT METHOD
-  ===================================== */
+  ========================== */
 
   const [
     paymentMethod,
     setPaymentMethod,
   ] = useState("card");
 
-  /* =====================================
+  /* =========================
      COMPLETE PAYMENT
-  ===================================== */
+  ========================== */
 
   const handlePayment = () => {
 
@@ -155,335 +156,371 @@ export default function RoundTripPaymentPage() {
 
       <Navbar />
 
-      <section className="px-5 py-24 lg:px-10">
+      <section className="section-spacing">
 
-        <div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-14 lg:grid-cols-[1fr_360px]">
+        <div className="page-container">
 
-          {/* =====================================
-              LEFT
-          ===================================== */}
+          <div className="responsive-grid">
 
-          <div className="bg-white p-8 shadow-sm lg:p-14">
+            {/* =========================
+                LEFT
+            ========================== */}
 
-            {/* HEADER */}
+            <div className="bg-white p-6 shadow-sm lg:p-14">
 
-            <div>
+              {/* HEADER */}
 
-              <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
-                Secure Payment
-              </p>
+              <div>
 
-              <h1 className="mt-5 text-[38px] lg:text-[60px] font-light uppercase leading-[1.1] text-[#222]">
+                <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
 
-                Complete
-                <br />
-                Payment
-              </h1>
+                  Secure Payment
+                </p>
 
-              <p className="mt-6 max-w-[700px] text-[16px] leading-[30px] text-[#666]">
-                Finalize your round-trip
-                reservation securely using
-                your preferred payment
-                method.
-              </p>
-            </div>
+                <h1 className="page-title mt-5 leading-[1.1] text-[#222]">
 
-            {/* PAYMENT TABS */}
+                  Complete
+                  <br />
+                  Payment
+                </h1>
 
-            <div className="mt-14 flex flex-wrap gap-4">
+                <p className="mt-6 max-w-[700px] text-[15px] leading-[30px] text-[#666]">
 
-              {/* CARD */}
+                  Finalize your round-trip
+                  reservation securely using
+                  your preferred payment
+                  method.
+                </p>
+              </div>
 
-              <button
-                onClick={() =>
-                  setPaymentMethod(
+              {/* PAYMENT TABS */}
+
+              <div className="mt-12 flex flex-wrap gap-4 lg:mt-14">
+
+                {/* CARD */}
+
+                <button
+                  onClick={() =>
+                    setPaymentMethod(
+                      "card"
+                    )
+                  }
+                  className={`h-[56px] px-6 text-[11px] uppercase tracking-[3px] transition lg:px-8 lg:text-[12px] ${
+                    paymentMethod ===
                     "card"
-                  )
-                }
-                className={`h-[56px] px-8 text-[12px] uppercase tracking-[4px] transition ${
-                  paymentMethod ===
-                  "card"
-                    ? "bg-[#00A878] text-white"
-                    : "border border-[#d8d8d8] bg-white text-[#222]"
-                }`}
-              >
-                Debit Card
-              </button>
+                      ? "bg-[#00A878] text-white"
+                      : "border border-[#d8d8d8] bg-white text-[#222]"
+                  }`}
+                >
 
-              {/* TRANSFER */}
+                  Debit Card
+                </button>
+
+                {/* TRANSFER */}
+
+                <button
+                  onClick={() =>
+                    setPaymentMethod(
+                      "transfer"
+                    )
+                  }
+                  className={`h-[56px] px-6 text-[11px] uppercase tracking-[3px] transition lg:px-8 lg:text-[12px] ${
+                    paymentMethod ===
+                    "transfer"
+                      ? "bg-[#00A878] text-white"
+                      : "border border-[#d8d8d8] bg-white text-[#222]"
+                  }`}
+                >
+
+                  Bank Transfer
+                </button>
+              </div>
+
+              {/* =========================
+                  CARD FORM
+              ========================== */}
+
+              {paymentMethod ===
+                "card" && (
+
+                <div className="mt-14 lg:mt-16">
+
+                  <div className="grid grid-cols-1 gap-8">
+
+                    {/* CARD HOLDER */}
+
+                    <div>
+
+                      <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                        Card Holder Name
+                      </label>
+
+                      <input
+                        type="text"
+                        placeholder="John Doe"
+                        className="form-input bg-[#f8f8f8] placeholder:text-[#999] focus:border-[#00A878]"
+                      />
+                    </div>
+
+                    {/* CARD NUMBER */}
+
+                    <div>
+
+                      <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                        Card Number
+                      </label>
+
+                      <input
+                        type="text"
+                        placeholder="1234 5678 9012 3456"
+                        className="form-input bg-[#f8f8f8] placeholder:text-[#999] focus:border-[#00A878]"
+                      />
+                    </div>
+
+                    {/* EXPIRY + CVV */}
+
+                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+
+                      {/* EXPIRY */}
+
+                      <div>
+
+                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                          Expiry Date
+                        </label>
+
+                        <input
+                          type="text"
+                          placeholder="MM/YY"
+                          className="form-input bg-[#f8f8f8] placeholder:text-[#999] focus:border-[#00A878]"
+                        />
+                      </div>
+
+                      {/* CVV */}
+
+                      <div>
+
+                        <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
+
+                          CVV
+                        </label>
+
+                        <input
+                          type="text"
+                          placeholder="123"
+                          className="form-input bg-[#f8f8f8] placeholder:text-[#999] focus:border-[#00A878]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* =========================
+                  TRANSFER
+              ========================== */}
+
+              {paymentMethod ===
+                "transfer" && (
+
+                <div className="mt-14 rounded-[14px] border border-[#d8d8d8] bg-[#f8f8f8] p-6 lg:mt-16 lg:p-8">
+
+                  <h3 className="text-[24px] font-light text-[#222] lg:text-[28px]">
+
+                    Bank Transfer
+                  </h3>
+
+                  <div className="mt-8 space-y-5">
+
+                    {/* BANK */}
+
+                    <div>
+
+                      <p className="text-[12px] uppercase tracking-[4px] text-[#777]">
+
+                        Bank Name
+                      </p>
+
+                      <p className="mt-2 text-[18px] text-[#222]">
+
+                        GTBank
+                      </p>
+                    </div>
+
+                    {/* ACCOUNT */}
+
+                    <div>
+
+                      <p className="text-[12px] uppercase tracking-[4px] text-[#777]">
+
+                        Account Number
+                      </p>
+
+                      <p className="mt-2 break-words text-[24px] font-light text-[#00A878] lg:text-[28px]">
+
+                        0123456789
+                      </p>
+                    </div>
+
+                    {/* ACCOUNT NAME */}
+
+                    <div>
+
+                      <p className="text-[12px] uppercase tracking-[4px] text-[#777]">
+
+                        Account Name
+                      </p>
+
+                      <p className="mt-2 text-[18px] text-[#222]">
+
+                        Valgee Transport Services
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* BUTTON */}
 
               <button
-                onClick={() =>
-                  setPaymentMethod(
-                    "transfer"
-                  )
+                onClick={
+                  handlePayment
                 }
-                className={`h-[56px] px-8 text-[12px] uppercase tracking-[4px] transition ${
-                  paymentMethod ===
-                  "transfer"
-                    ? "bg-[#00A878] text-white"
-                    : "border border-[#d8d8d8] bg-white text-[#222]"
-                }`}
+                className="primary-button mt-14 lg:mt-16"
               >
-                Bank Transfer
+
+                Complete Payment
               </button>
             </div>
 
-            {/* =====================================
-                CARD FORM
-            ===================================== */}
+            {/* =========================
+                SUMMARY
+            ========================== */}
 
-            {paymentMethod ===
-              "card" && (
+            <div className="summary-card">
 
-              <div className="mt-16">
+              <div className="bg-white p-8 shadow-sm lg:p-10">
 
-                <div className="grid grid-cols-1 gap-8">
+                <h2 className="text-[30px] font-light text-[#222]">
 
-                  {/* CARD HOLDER */}
+                  Booking Summary
+                </h2>
 
-                  <div>
+                <div className="mt-10 space-y-10">
 
-                    <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                      Card Holder Name
-                    </label>
-
-                    <input
-                      type="text"
-                      placeholder="John Doe"
-                      className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                    />
-                  </div>
-
-                  {/* CARD NUMBER */}
+                  {/* DEPARTURE */}
 
                   <div>
 
-                    <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                      Card Number
-                    </label>
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
 
-                    <input
-                      type="text"
-                      placeholder="1234 5678 9012 3456"
-                      className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                    />
-                  </div>
+                      Departure Journey
+                    </p>
 
-                  {/* EXPIRY + CVV */}
+                    <div className="mt-4 space-y-2">
 
-                  <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                      <p className="text-[18px] text-[#222]">
 
-                    {/* EXPIRY */}
+                        {from} → {to}
+                      </p>
 
-                    <div>
+                      <p className="text-[15px] text-[#666]">
 
-                      <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                        Expiry Date
-                      </label>
+                        {departureTime}
+                      </p>
 
-                      <input
-                        type="text"
-                        placeholder="MM/YY"
-                        className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                      />
-                    </div>
+                      <p className="text-[15px] text-[#666]">
 
-                    {/* CVV */}
+                        {
+                          departureVehicle
+                        }
+                      </p>
 
-                    <div>
+                      <p className="break-words text-[15px] text-[#00A878]">
 
-                      <label className="mb-3 block text-[12px] uppercase tracking-[4px] text-[#555]">
-                        CVV
-                      </label>
-
-                      <input
-                        type="text"
-                        placeholder="123"
-                        className="h-[60px] w-full border border-[#d8d8d8] bg-[#f8f8f8] px-5 text-black outline-none placeholder:text-[#999] focus:border-[#00A878]"
-                      />
+                        Seats:{" "}
+                        {
+                          selectedDepartureSeats
+                        }
+                      </p>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
 
-            {/* =====================================
-                TRANSFER
-            ===================================== */}
-
-            {paymentMethod ===
-              "transfer" && (
-
-              <div className="mt-16 rounded-[14px] border border-[#d8d8d8] bg-[#f8f8f8] p-8">
-
-                <h3 className="text-[28px] font-light text-[#222]">
-                  Bank Transfer
-                </h3>
-
-                <div className="mt-8 space-y-6">
-
-                  {/* BANK */}
+                  {/* RETURN */}
 
                   <div>
 
-                    <p className="text-[12px] uppercase tracking-[4px] text-[#777]">
-                      Bank Name
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Return Journey
                     </p>
 
-                    <p className="mt-2 text-[20px] text-[#222]">
-                      GTBank
-                    </p>
+                    <div className="mt-4 space-y-2">
+
+                      <p className="text-[18px] text-[#222]">
+
+                        {to} → {from}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {returnTime}
+                      </p>
+
+                      <p className="text-[15px] text-[#666]">
+
+                        {returnVehicle}
+                      </p>
+
+                      <p className="break-words text-[15px] text-[#00A878]">
+
+                        Seats:{" "}
+                        {
+                          selectedReturnSeats
+                        }
+                      </p>
+                    </div>
                   </div>
 
-                  {/* ACCOUNT */}
+                  {/* PASSENGERS */}
 
                   <div>
 
-                    <p className="text-[12px] uppercase tracking-[4px] text-[#777]">
-                      Account Number
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Passenger Count
                     </p>
 
-                    <p className="mt-2 text-[28px] font-light text-[#00A878]">
-                      0123456789
-                    </p>
-                  </div>
+                    <p className="mt-4 text-[18px] text-[#222]">
 
-                  {/* ACCOUNT NAME */}
-
-                  <div>
-
-                    <p className="text-[12px] uppercase tracking-[4px] text-[#777]">
-                      Account Name
-                    </p>
-
-                    <p className="mt-2 text-[20px] text-[#222]">
-                      Valgee Transport Services
+                      {
+                        departureSeatArray.length
+                      }{" "}
+                      Passenger(s)
                     </p>
                   </div>
+
+                  {/* TOTAL */}
+
+                  <div className="border-t border-[#e5e5e5] pt-8">
+
+                    <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
+                      Grand Total
+                    </p>
+
+                    <p className="mt-3 break-words text-[34px] font-light text-[#00A878] lg:text-[42px]">
+
+                      ₦
+                      {Number(
+                        grandTotal
+                      ).toLocaleString()}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {/* BUTTON */}
-
-            <button
-              onClick={
-                handlePayment
-              }
-              className="mt-16 h-[60px] bg-[#00A878] px-12 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
-            >
-              Complete Payment
-            </button>
-          </div>
-
-          {/* =====================================
-              SUMMARY
-          ===================================== */}
-
-          <div className="sticky top-[120px] h-fit bg-white px-8 py-10 shadow-sm">
-
-            <h2 className="text-[30px] font-light text-[#222]">
-              Booking Summary
-            </h2>
-
-            <div className="mt-10 space-y-10">
-
-              {/* DEPARTURE */}
-
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Departure Journey
-                </p>
-
-                <div className="mt-4 space-y-2">
-
-                  <p className="text-[18px] text-[#222]">
-                    {from} → {to}
-                  </p>
-
-                  <p className="text-[15px] text-[#666]">
-                    {departureTime}
-                  </p>
-
-                  <p className="text-[15px] text-[#666]">
-                    {
-                      departureVehicle
-                    }
-                  </p>
-
-                  <p className="text-[15px] text-[#00A878]">
-                    Seats:{" "}
-                    {
-                      selectedDepartureSeats
-                    }
-                  </p>
-                </div>
-              </div>
-
-              {/* RETURN */}
-
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Return Journey
-                </p>
-
-                <div className="mt-4 space-y-2">
-
-                  <p className="text-[18px] text-[#222]">
-                    {to} → {from}
-                  </p>
-
-                  <p className="text-[15px] text-[#666]">
-                    {returnTime}
-                  </p>
-
-                  <p className="text-[15px] text-[#666]">
-                    {returnVehicle}
-                  </p>
-
-                  <p className="text-[15px] text-[#00A878]">
-                    Seats:{" "}
-                    {
-                      selectedReturnSeats
-                    }
-                  </p>
-                </div>
-              </div>
-
-              {/* PASSENGERS */}
-
-              <div>
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Passenger Count
-                </p>
-
-                <p className="mt-4 text-[18px] text-[#222]">
-                  {
-                    departureSeatArray.length
-                  }{" "}
-                  Passenger(s)
-                </p>
-              </div>
-
-              {/* TOTAL */}
-
-              <div className="border-t border-[#e5e5e5] pt-8">
-
-                <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
-                  Grand Total
-                </p>
-
-                <p className="mt-3 text-[42px] font-light text-[#00A878]">
-
-                  ₦
-                  {Number(
-                    grandTotal
-                  ).toLocaleString()}
-                </p>
               </div>
             </div>
           </div>

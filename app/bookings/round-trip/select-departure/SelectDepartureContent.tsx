@@ -1,5 +1,8 @@
 "use client";
 
+export const dynamic =
+  "force-dynamic";
+
 import {
   useRouter,
   useSearchParams,
@@ -15,9 +18,9 @@ export default function SelectDeparturePage() {
   const searchParams =
     useSearchParams();
 
-  /* =====================================
+  /* =========================
      QUERY PARAMS
-  ===================================== */
+  ========================== */
 
   const from =
     searchParams.get("from") || "";
@@ -41,9 +44,9 @@ export default function SelectDeparturePage() {
       "returnDate"
     ) || "";
 
-  /* =====================================
+  /* =========================
      AVAILABLE TRIPS
-  ===================================== */
+  ========================== */
 
   const trips = [
     {
@@ -77,9 +80,9 @@ export default function SelectDeparturePage() {
     },
   ];
 
-  /* =====================================
+  /* =========================
      SELECT DEPARTURE
-  ===================================== */
+  ========================== */
 
   const handleSelectDeparture = (
     trip: any
@@ -113,11 +116,11 @@ export default function SelectDeparturePage() {
 
       <Navbar />
 
-      {/* =====================================
+      {/* =========================
           HERO
-      ===================================== */}
+      ========================== */}
 
-      <section className="relative flex min-h-[280px] items-center justify-center overflow-hidden">
+      <section className="relative flex min-h-[240px] items-center justify-center overflow-hidden lg:min-h-[320px]">
 
         {/* BG */}
 
@@ -137,11 +140,12 @@ export default function SelectDeparturePage() {
 
         <div className="relative z-10 px-5 text-center text-white">
 
-          <p className="text-[12px] uppercase tracking-[6px] text-[#00A878]">
+          <p className="text-[11px] uppercase tracking-[6px] text-[#00A878] lg:text-[12px]">
+
             Round Trip
           </p>
 
-          <h1 className="mt-5 text-[40px] lg:text-[68px] font-light uppercase leading-[1.1]">
+          <h1 className="page-title mt-5 leading-[1.1] text-white">
 
             Select
             <br />
@@ -150,23 +154,24 @@ export default function SelectDeparturePage() {
         </div>
       </section>
 
-      {/* =====================================
+      {/* =========================
           TRIPS SECTION
-      ===================================== */}
+      ========================== */}
 
-      <section className="px-5 py-24 lg:px-10">
+      <section className="section-spacing">
 
-        <div className="mx-auto max-w-[1300px]">
+        <div className="page-container">
 
           {/* TOP INFO */}
 
-          <div className="mb-16">
+          <div className="mb-14 lg:mb-16">
 
             <p className="text-[12px] uppercase tracking-[5px] text-[#777]">
+
               Available Departure Trips
             </p>
 
-            <h2 className="mt-5 text-[34px] lg:text-[56px] font-light uppercase leading-[1.1] text-[#222]">
+            <h2 className="mt-5 text-[34px] font-light uppercase leading-[1.1] text-[#222] lg:text-[56px]">
 
               {from}
               <br />
@@ -175,37 +180,49 @@ export default function SelectDeparturePage() {
               {to}
             </h2>
 
-            <div className="mt-8 flex flex-wrap gap-10">
+            <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:flex lg:flex-wrap lg:gap-12">
+
+              {/* DEPARTURE */}
 
               <div>
 
                 <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
                   Departure Date
                 </p>
 
-                <p className="mt-2 text-[18px] text-[#222]">
+                <p className="mt-2 text-[17px] text-[#222] lg:text-[18px]">
+
                   {departureDate}
                 </p>
               </div>
 
+              {/* RETURN */}
+
               <div>
 
                 <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
                   Return Date
                 </p>
 
-                <p className="mt-2 text-[18px] text-[#222]">
+                <p className="mt-2 text-[17px] text-[#222] lg:text-[18px]">
+
                   {returnDate}
                 </p>
               </div>
 
+              {/* SEATS */}
+
               <div>
 
                 <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
                   Seats Requested
                 </p>
 
-                <p className="mt-2 text-[18px] text-[#222]">
+                <p className="mt-2 text-[17px] text-[#222] lg:text-[18px]">
+
                   {seats}
                 </p>
               </div>
@@ -214,20 +231,20 @@ export default function SelectDeparturePage() {
 
           {/* TRIPS */}
 
-          <div className="space-y-10">
+          <div className="space-y-8 lg:space-y-10">
 
             {trips.map((trip) => (
 
               <div
                 key={trip.id}
-                className="bg-white p-8 shadow-sm lg:p-10"
+                className="bg-white p-6 shadow-sm lg:p-10"
               >
 
                 {/* TIME */}
 
-                <div className="border-b border-[#e5e5e5] pb-6">
+                <div className="border-b border-[#e5e5e5] pb-5 lg:pb-6">
 
-                  <h3 className="text-[36px] font-light text-[#00A878]">
+                  <h3 className="text-[30px] font-light text-[#00A878] lg:text-[40px]">
 
                     {trip.time}
                   </h3>
@@ -235,17 +252,18 @@ export default function SelectDeparturePage() {
 
                 {/* CONTENT */}
 
-                <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-center">
+                <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-center lg:gap-10">
 
                   {/* VEHICLE */}
 
                   <div>
 
                     <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
                       Vehicle
                     </p>
 
-                    <p className="mt-3 text-[28px] font-light text-[#222]">
+                    <p className="mt-3 text-[24px] font-light text-[#222] lg:text-[30px]">
 
                       {trip.vehicle}
                     </p>
@@ -256,10 +274,11 @@ export default function SelectDeparturePage() {
                   <div>
 
                     <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
                       Availability
                     </p>
 
-                    <p className="mt-3 text-[22px] text-[#ff4d4d]">
+                    <p className="mt-3 text-[20px] text-[#ff4d4d] lg:text-[24px]">
 
                       {trip.availability}
                     </p>
@@ -270,15 +289,17 @@ export default function SelectDeparturePage() {
                   <div>
 
                     <p className="text-[12px] uppercase tracking-[4px] text-[#888]">
+
                       Amount
                     </p>
 
-                    <p className="mt-3 text-[34px] font-light text-[#222]">
+                    <p className="mt-3 text-[28px] font-light text-[#222] lg:text-[38px]">
 
                       {trip.amount}
                     </p>
 
                     <p className="mt-1 text-[14px] text-[#666]">
+
                       per seat
                     </p>
                   </div>
@@ -291,8 +312,9 @@ export default function SelectDeparturePage() {
                         trip
                       )
                     }
-                    className="h-[58px] bg-[#00A878] px-10 text-[12px] uppercase tracking-[4px] text-white transition hover:bg-[#008F67]"
+                    className="primary-button w-full lg:w-auto"
                   >
+
                     Select Departure
                   </button>
                 </div>
