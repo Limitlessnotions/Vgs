@@ -167,7 +167,7 @@ export default function SelectSeatsPage() {
 
       <Navbar />
 
-      <section className="px-10 py-24">
+      <section className="section-spacing">
 
         <div className="mx-auto grid max-w-[1180px] grid-cols-[620px_360px] gap-24">
 

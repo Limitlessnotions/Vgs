@@ -34,3 +34,167 @@ input::placeholder,
 textarea::placeholder {
   color: #999;
 }
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================
+   GLOBAL CONTAINERS
+========================= */
+
+.page-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section-spacing {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .page-container {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+
+/* =========================
+   RESPONSIVE GRIDS
+========================= */
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: 1fr 380px;
+    align-items: start;
+  }
+}
+
+/* =========================
+   RESPONSIVE FLEX
+========================= */
+
+.responsive-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .responsive-flex {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+/* =========================
+   SUMMARY CARD
+========================= */
+
+.summary-card {
+  width: 100%;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .summary-card {
+    width: 380px;
+    position: sticky;
+    top: 120px;
+  }
+}
+
+/* =========================
+   RESPONSIVE HEADINGS
+========================= */
+
+.page-title {
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1024px) {
+  .page-title {
+    font-size: 62px;
+  }
+}
+
+/* =========================
+   RESPONSIVE INPUTS
+========================= */
+
+.form-input {
+  width: 100%;
+  height: 58px;
+  border: 1px solid #d8d8d8;
+  background: white;
+  padding-left: 16px;
+  padding-right: 16px;
+  outline: none;
+  color: black;
+}
+
+/* =========================
+   RESPONSIVE BUTTONS
+========================= */
+
+.primary-button {
+  height: 58px;
+  background: #00A878;
+  color: white;
+  padding-left: 32px;
+  padding-right: 32px;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.primary-button:hover {
+  background: #008f67;
+}
+
+/* =========================
+   RESPONSIVE IMAGES
+========================= */
+
+.responsive-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================
+   MOBILE SEAT LAYOUT
+========================= */
+
+@media (max-width: 1023px) {
+  .seat-layout-wrapper {
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+}
