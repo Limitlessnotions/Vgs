@@ -382,7 +382,7 @@ export default function Hero() {
 
     <section className="min-h-screen bg-[#efefef] px-5 py-14 lg:px-20 lg:py-24">
 
-      <div className="mx-auto flex max-w-[1700px] flex-col gap-14 lg:flex-row lg:justify-between lg:gap-20">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-14 lg:flex-row lg:items-start lg:justify-between lg:gap-14">
 
         {/* LEFT */}
 
@@ -403,7 +403,7 @@ export default function Hero() {
 
           {/* TABS */}
 
-          <div className="mt-10 flex flex-wrap gap-2 lg:mt-16">
+          <div className="mt-10 flex flex-nowrap overflow-x-auto pb-2 lg:mt-16 lg:overflow-visible">
 
             <button
               onClick={() =>
@@ -477,9 +477,11 @@ export default function Hero() {
 
         {/* RIGHT */}
 
-        <div className="relative flex w-full items-center justify-center">
+        {/* RIGHT */}
 
-          <div className="relative h-[260px] w-full overflow-hidden bg-white sm:h-[350px] lg:h-[620px] lg:max-w-[620px]">
+<div className="relative flex w-full items-center justify-center lg:w-[48%]">
+
+  <div className="relative h-[240px] w-full overflow-hidden bg-white sm:h-[320px] lg:h-[520px] lg:max-w-[540px]">
 
             <img
               src={
